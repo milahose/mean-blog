@@ -24,14 +24,10 @@ router.post('/register', (req, res, next) => {
 		return res.json({ err: true, msg: 'Password is required.' });
 	}
 
-	User.find({$or: [{ email }, { username }]})
+	User.find({ $or: [{ email }, { username }] })
 		.then(user => {
 			if (user.length) {
-				if (user[0].email === email) {
-					return res.json({ err: true, msg: 'Email already exists.'});
-				} else if (user[0].username === username) {
-					return res.json({ err: true, msg: 'Username already exists.'});
-				}
+				return res.json({ err: true, msg: 'Username or email already exists.'});
 			} else {
 				return User.create(req.body);
 			}
