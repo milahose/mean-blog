@@ -5,39 +5,39 @@ router.post('/register', (req, res, next) => {
 	const { email, username } = req.body;
 
 	if (!req.body.firstname) {
-		res.status(500).json({ msg: 'First name is required.' });
+		return res.json({ err: true, msg: 'First name is required.' });
 	}
 	
 	if (!req.body.lastname) {
-		res.status(500).json({ msg: 'Last name is required.' });
+		return res.json({ err: true, msg: 'Last name is required.' });
 	}
 
 	if (!req.body.username) {
-		res.status(500).json({ msg: 'Username is required.' });
+		return res.json({ err: true, msg: 'Username is required.' });
 	}
 
 	if (!req.body.email) {
-		res.status(500).json({ msg: 'Email is required.' });
+		return res.json({ err: true, msg: 'Email is required.' });
 	}
 
 	if (!req.body.password) {
-		res.status(500).json({ msg: 'Password is required.' });
+		return res.json({ err: true, msg: 'Password is required.' });
 	}
 
-	User.find({ email, username })
+	User.find({$or: [{ email }, { username }]})
 		.then(user => {
 			if (user.length) {
 				if (user[0].email === email) {
-					res.status(409).json({ msg: 'Email already exists'});
+					return res.json({ err: true, msg: 'Email already exists.'});
 				} else if (user[0].username === username) {
-					res.status(409).json({ msg: 'Username already exists'});
+					return res.json({ err: true, msg: 'Username already exists.'});
 				}
 			} else {
 				return User.create(req.body);
 			}
 		})
-		.then(result => res.json(result))
-		.then(null, err => res.status(500).json({ msg: err }));
+		.then(() => res.json({err: false, msg: 'Account registered.'}))
+		.then(null, err => res.json({ err: true, msg: err }));
 });
 
 router.post('/login', (req, res) => {
