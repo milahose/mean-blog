@@ -1,0 +1,8 @@
+.container {
+	margin: 11rem auto 8rem auto !important;
+}
+
+.card {
+	padding: 3rem;
+	box-shadow: 0 10px 6px -6px lightgray;
+}

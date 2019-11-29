@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
 	Blog.findOne({ username, title })
 		.then(result => res.json(result))
 		.then(null, err => console.log(`Error! ${err}`))
-})
+});
 
 router.post('/', (req, res) => {
 	Blog.create(req.body)
