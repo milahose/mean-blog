@@ -1,19 +1,19 @@
 <div class="container col-md-8 col-md-offset-4">
 	<div class="card">
-		<form>
+		<form [formGroup]="registerForm">
 			<div class="form-row">
 				<div class="col-md-6 mb-3">
-					<label for="validationServer01">First name</label>
-					<input type="text" class="form-control is-valid" placeholder="First name" value="Mark"
-						required>
+					<label for="firstname">First name</label>
+					<input type="text" name="firstname" id="firstname" formControlName="firstname"
+						class="form-control is-valid" placeholder="First name" required />
 					<div class="invalid-feedback">
 						First name is required.
 					</div>
 				</div>
 				<div class="col-md-6 mb-3">
-					<label for="validationServer02">Last name</label>
-					<input type="text" class="form-control is-valid" placeholder="Last name" value="Otto"
-						required>
+					<label for="lastname">Last name</label>
+					<input type="text" name="lastname" id="lastname" formControlName="lastname"
+						class="form-control is-valid" placeholder="Last name" required />
 					<div class="invalid-feedback">
 						Last name is required.
 					</div>
@@ -21,9 +21,9 @@
 			</div>
 			<div class="form-row">
 				<div class="col-md-12 mb-3">
-					<label for="validationServer02">Username</label>
-					<input type="text" class="form-control is-valid" placeholder="Username" value="Otto"
-						required>
+					<label for="username">Username</label>
+					<input type="text" name="username" id="username" formControlName="username" class="form-control is-valid"
+						placeholder="Username" required />
 					<div class="invalid-feedback">
 						Username is required.
 					</div>
@@ -31,9 +31,9 @@
 			</div>
 			<div class="form-row">
 				<div class="col-md-12 mb-3">
-					<label for="validationServer02">Email</label>
-					<input type="text" class="form-control" placeholder="email@domain.com" value=""
-						required>
+					<label for="email">Email</label>
+					<input type="text" name="email" id="email" formControlName="email" class="form-control is-valid"
+						placeholder="email@domain.com" required />
 					<div class="invalid-feedback">
 						Email is required.
 					</div>
@@ -41,14 +41,15 @@
 			</div>
 			<div class="form-row">
 				<div class="col-md-12 mb-3">
-					<label for="validationServer02">Password</label>
-					<input type="text" class="form-control" placeholder="Username" value="" required>
+					<label for="password">Password</label>
+					<input type="password" name="password" id="password" formControlName="password" class="form-control is-valid"
+						placeholder="Password" required />
 					<div class="invalid-feedback">
 						Password is required.
 					</div>
 				</div>
 			</div>
-			<button class="btn btn-primary" type="submit" [disabled]="!profileForm.valid">Submit</button>
+			<button class="btn btn-primary" type="submit" [disabled]="!registerForm.valid">Submit</button>
 		</form>
 		<div class="mt-4 text-right">
 			<p>Already have an account? <a routerLink="/login">Log in</a></p>
