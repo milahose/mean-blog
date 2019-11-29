@@ -1,11 +1,21 @@
 <div class="container col-md-8 col-md-offset-4">
 	<div class="card">
-		<form>
+		<form [formGroup]="loginForm" (ngSubmit)="handleSubmit()">
 			<div class="form-row">
+
+				<div class="col-md-12 show-hide-message">
+					<div [ngClass]="msgClass">
+						{{ msg }}
+						<button [hidden]="!msg" type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</div>
+
 				<div class="col-md-12 mb-3">
-					<label for="validationServer02">Username or email</label>
-					<input type="text" class="form-control" id="validationServer02" placeholder="Username or email" value=""
-						required>
+					<label for="usernameOrEmail">Username or email</label>
+					<input type="text" name="usernameOrEmail" id="usernameOrEmail" formControlName="usernameOrEmail" class="form-control" 
+						[ngClass]="{'is-invalid': (loginForm.controls.usernameOrEmail.errors && loginForm.controls.usernameOrEmail.dirty)}" placeholder="Username or email" required />
 					<div class="invalid-feedback">
 						Username or Email is required.
 					</div>
@@ -13,15 +23,15 @@
 			</div>
 			<div class="form-row">
 				<div class="col-md-12 mb-3">
-					<label for="validationServer02">Password</label>
-					<input type="text" class="form-control" id="validationServer02" placeholder="Password" value=""
-						required>
+					<label for="password">Password</label>
+					<input type="password" name="password" id="password" formControlName="password" class="form-control" 
+						[ngClass]="{'is-invalid': (loginForm.controls.password.errors && loginForm.controls.password.dirty)}" placeholder="Password" required />
 					<div class="invalid-feedback">
 						Password is required.
 					</div>
 				</div>
 			</div>
-			<button class="btn btn-primary" type="submit">Submit</button>
+			<button class="btn btn-primary" type="submit" [disabled]="!loginForm.valid">Submit</button>
 		</form>
 		<div class="mt-4 text-right">
 			<p>Don't have an account? <a routerLink="/register">Sign Up</a></p>

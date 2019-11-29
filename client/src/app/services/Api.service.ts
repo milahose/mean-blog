@@ -15,4 +15,8 @@ export class ApiService {
     return this.http.post<any>('api/auth/register', user);
   }
 
+  login(user): Observable<any> {
+    return this.http.post<any>('api/auth/login', user);
+  }
+
 }
