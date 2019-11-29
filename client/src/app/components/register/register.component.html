@@ -1,11 +1,12 @@
 <div class="container col-md-8 col-md-offset-4">
 	<div class="card">
-		<form [formGroup]="registerForm">
+		<form [formGroup]="registerForm" (ngSubmit)="handleSubmit()">
 			<div class="form-row">
 				<div class="col-md-6 mb-3">
-					<label for="firstname">First name</label>
-					<input type="text" name="firstname" id="firstname" formControlName="firstname"
-						class="form-control is-valid" placeholder="First name" required />
+					<label for="lastname">First name</label>
+					<input type="text" name="lastname" id="firstname" formControlName="firstname"
+						class="form-control" [ngClass]="{'is-invalid': (registerForm.controls.firstname.errors && registerForm.controls.firstname.dirty), 
+						'is-valid': !registerForm.controls.firstname.errors}" placeholder="First name" required />
 					<div class="invalid-feedback">
 						First name is required.
 					</div>
@@ -13,7 +14,8 @@
 				<div class="col-md-6 mb-3">
 					<label for="lastname">Last name</label>
 					<input type="text" name="lastname" id="lastname" formControlName="lastname"
-						class="form-control is-valid" placeholder="Last name" required />
+						[ngClass]="{'is-invalid': (registerForm.controls.lastname.errors && registerForm.controls.lastname.dirty), 
+						'is-valid': !registerForm.controls.lastname.errors}" class="form-control" placeholder="Last name" required />
 					<div class="invalid-feedback">
 						Last name is required.
 					</div>
@@ -22,8 +24,9 @@
 			<div class="form-row">
 				<div class="col-md-12 mb-3">
 					<label for="username">Username</label>
-					<input type="text" name="username" id="username" formControlName="username" class="form-control is-valid"
-						placeholder="Username" required />
+					<input type="text" name="username" id="username" formControlName="username" class="form-control"
+						[ngClass]="{'is-invalid': (registerForm.controls.username.errors && registerForm.controls.username.dirty), 
+						'is-valid': !registerForm.controls.username.errors}" placeholder="Username" required />
 					<div class="invalid-feedback">
 						Username is required.
 					</div>
@@ -31,21 +34,25 @@
 			</div>
 			<div class="form-row">
 				<div class="col-md-12 mb-3">
-					<label for="email">Email</label>
-					<input type="text" name="email" id="email" formControlName="email" class="form-control is-valid"
-						placeholder="email@domain.com" required />
+					<label for="password">Email</label>
+					<input type="email" name="email" id="email" formControlName="email" class="form-control"
+						[ngClass]="{'is-invalid': (registerForm.controls.email.errors && registerForm.controls.email.dirty), 
+						'is-valid': !registerForm.controls.email.errors}" placeholder="email@domain.com" required />
 					<div class="invalid-feedback">
-						Email is required.
+						<div *ngIf="registerForm.controls.email.errors?.required && registerForm.controls.email.dirty">Email is required</div>
+						<div *ngIf="registerForm.controls.email.errors?.email">Email is invalid.</div>
 					</div>
 				</div>
 			</div>
 			<div class="form-row">
 				<div class="col-md-12 mb-3">
 					<label for="password">Password</label>
-					<input type="password" name="password" id="password" formControlName="password" class="form-control is-valid"
-						placeholder="Password" required />
+					<input type="password" name="password" id="password" formControlName="password" class="form-control"
+						[ngClass]="{'is-invalid': (registerForm.controls.password.errors && registerForm.controls.password.dirty), 
+						'is-valid': !registerForm.controls.password.errors}"placeholder="Password" required />
 					<div class="invalid-feedback">
-						Password is required.
+						<div *ngIf="registerForm.controls.password.errors?.required && registerForm.controls.password.dirty">Password is required</div>
+						<div *ngIf="registerForm.controls.password.errors?.minlength && registerForm.controls.password.dirty">Password must be a minimum of 8 characters.</div>
 					</div>
 				</div>
 			</div>
