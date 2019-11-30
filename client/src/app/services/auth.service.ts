@@ -29,9 +29,9 @@ export class AuthService {
   }
 
   logout() {
+    localStorage.clear();
     this.authToken = null;
     this.user = null;
-    localStorage.clear();
   }
 
   storeAuthToken(token, user) {
@@ -42,7 +42,11 @@ export class AuthService {
   }
 
   tokenExpired() {
-    return jwt.isTokenExpired(this.authToken);
+    if (!this.authToken) {
+      return true;
+    } else {
+      return jwt.isTokenExpired(this.authToken);
+    }
   }
 
 }

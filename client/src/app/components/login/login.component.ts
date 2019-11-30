@@ -30,7 +30,7 @@ export class LoginComponent {
           this.AuthService.storeAuthToken(res.token, JSON.stringify(res.user));
           this.msgClass = 'alert alert-success alert-dismissible fade show';
           this.msg = res.msg;
-          setTimeout(() => this.router.navigate(['/']), 1000);
+          setTimeout(() => this.router.navigate(['/blog']), 500);
         }
       })
   }
