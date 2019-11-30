@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 
@@ -13,6 +13,11 @@ export class AuthService {
 
   authToken;
   user;
+
+  headers = {
+    'Content-Type': 'application/json',
+    'authorization': localStorage.getItem('token')
+  }
 
   register(user): Observable<any> {
     return this.http.post<any>('api/auth/register', user);

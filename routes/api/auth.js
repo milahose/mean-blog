@@ -1,6 +1,4 @@
 const router = require('express').Router();
-const passport = require('passport');
-const jwt = require('jsonwebtoken');
 const User = require('../../models/User');
 require('dotenv').config();
 
