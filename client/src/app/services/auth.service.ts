@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 
-export class ApiService {
+export class AuthService {
 
   constructor(private http: HttpClient) { }
 

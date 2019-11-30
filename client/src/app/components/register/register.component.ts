@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ApiService } from '../../services/Api.service';
+import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 
 export class RegisterComponent {
-  constructor(private fb: FormBuilder, private ApiService: ApiService, private router: Router) { }
+  constructor(private fb: FormBuilder, private AuthService: AuthService, private router: Router) { }
 
   msg: string;
   msgClass: string;
@@ -18,7 +18,7 @@ export class RegisterComponent {
 
 
   handleSubmit() {
-    this.ApiService.register({
+    this.AuthService.register({
       firstname: this.registerForm.get('firstname').value,
       lastname: this.registerForm.get('lastname').value,
       username: this.registerForm.get('username').value.toLowerCase(),

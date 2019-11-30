@@ -10,7 +10,7 @@ import { BlogComponent } from './components/blog/blog.component';
 import { HomeComponent } from './components/home/home.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
-import { ApiService } from './services/Api.service';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +28,7 @@ import { ApiService } from './services/Api.service';
     ReactiveFormsModule,
     AppRoutingModule
   ],
-  providers: [ApiService],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
