@@ -5,10 +5,19 @@ router.get('/', (req, res) => {
 	return res.json(req.decoded)
 });
 
-router.post('/', (req, res) => {
-	Blog.create(req.body)
+router.get('/@username/posts', (req, res) => {
+	Blog.find({ username: req.params.username })
 		.then(result => res.json(result))
-		.then(null, err => console.log(`Error! ${err}`))
+		.then(null, err => res.json({err: true, msg: err.message}))
+});
+
+router.post('/', (req, res) => {
+	Blog.create({
+		...req.body,
+		user: req.decoded.userId
+	})
+		.then(result => res.json(result))
+		.then(null, err => res.json({ err: true, msg: err.message }))
 });
 
 module.exports = router;

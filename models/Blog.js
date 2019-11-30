@@ -12,7 +12,11 @@ const blogSchema = new Schema({
 	},
 	username: {
 		type: String,
-		required: true
+		required: true,
+	},
+	user: {
+		type: Schema.Types.ObjectId, 
+		ref: 'User'
 	},
 	date: {
 		type: Date, 

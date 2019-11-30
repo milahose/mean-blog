@@ -27,9 +27,9 @@ const userSchema = new Schema({
 		type: String,
 		required: true,
 	},
-	blogs: {
-		type: Schema.Types.ObjectId,
-		ref: 'Blog',
+	createdOn: {
+		type: Date,
+		default: Date.now
 	}
 });
 

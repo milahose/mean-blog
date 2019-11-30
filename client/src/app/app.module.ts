@@ -10,7 +10,7 @@ import { BlogComponent } from './components/blog/blog.component';
 import { HomeComponent } from './components/home/home.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
-import { AuthService } from './services/auth.service';
+import { AuthService } from './services/auth/auth.service';
 import { AuthGuard } from './auth/auth.guard';
 import { NotAuthGuard } from './auth/notAuth.guard';
 import { ProfileComponent } from './components/profile/profile.component';

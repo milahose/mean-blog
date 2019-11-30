@@ -1,0 +1,12 @@
+.container {
+	margin-top: 6rem !important;
+	margin-bottom: 4rem !important;
+}
+
+.card {
+	box-shadow: 0 10px 6px -6px lightgray;
+}
+
+button {
+	width: 80px;
+}
