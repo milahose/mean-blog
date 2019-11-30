@@ -22,13 +22,14 @@ export class LoginComponent {
       usernameOrEmail: this.loginForm.get('usernameOrEmail').value.toLowerCase(),
       password: this.loginForm.get('password').value
     })
-      .subscribe(result => {
-        if (result.err) {
+      .subscribe(res => {
+        if (res.err) {
           this.msgClass = 'alert alert-danger alert-dismissible fade show';
-          this.msg = result.msg;
+          this.msg = res.msg;
         } else {
+          this.AuthService.storeAuthToken(res.token, JSON.stringify(res.user));
           this.msgClass = 'alert alert-success alert-dismissible fade show';
-          this.msg = result.msg;
+          this.msg = res.msg;
           setTimeout(() => this.router.navigate(['/']), 1000);
         }
       })

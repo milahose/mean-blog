@@ -25,13 +25,13 @@ export class RegisterComponent {
       email: this.registerForm.get('email').value.toLowerCase(),
       password: this.registerForm.get('password').value
     })
-    .subscribe(result => {
-      if (result.err) {
+    .subscribe(res => {
+      if (res.err) {
         this.msgClass = 'alert alert-danger alert-dismissible fade show';
-        this.msg = result.msg;
+        this.msg = res.msg;
       } else {
         this.msgClass = 'alert alert-success alert-dismissible fade show';
-        this.msg = result.msg;
+        this.msg = res.msg;
         setTimeout(() => this.router.navigate(['/blog']), 2000);
       }
     })
