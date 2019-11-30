@@ -21,8 +21,8 @@ export class RegisterComponent {
     this.ApiService.register({
       firstname: this.registerForm.get('firstname').value,
       lastname: this.registerForm.get('lastname').value,
-      username: this.registerForm.get('username').value,
-      email: this.registerForm.get('email').value,
+      username: this.registerForm.get('username').value.toLowerCase(),
+      email: this.registerForm.get('email').value.toLowerCase(),
       password: this.registerForm.get('password').value
     })
     .subscribe(result => {

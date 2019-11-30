@@ -19,7 +19,7 @@ export class LoginComponent {
 
   handleSubmit() {
     this.ApiService.login({
-      usernameOrEmail: this.loginForm.get('usernameOrEmail').value,
+      usernameOrEmail: this.loginForm.get('usernameOrEmail').value.toLowerCase(),
       password: this.loginForm.get('password').value
     })
       .subscribe(result => {

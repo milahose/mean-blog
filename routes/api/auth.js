@@ -33,7 +33,7 @@ router.post('/register', (req, res, next) => {
 			}
 		})
 		.then(() => res.json({ err: false, msg: 'Account registered.' }))
-		.then(null, err => res.json({ err: true, msg: err }));
+		.then(null, err => res.json({ err: true, msg: err.toString() }));
 });
 
 router.post('/login', (req, res) => {
@@ -47,15 +47,17 @@ router.post('/login', (req, res) => {
 		return res.json({ err: true, msg: 'Password is required.'} );
 	}
 
-	User.find({ $or: [{ email: value }, { username: value }] })
+	User.findOne({ $or: [{ email: value }, { username: value }] })
 		.then(user => {
-			if (!user.length) {
-				res.json({ err: true, msg: 'Incorrect username, password or email.' });
+			if (!user) {
+				return res.json({ err: true, msg: 'Incorrect username, password or email.' });
 			} else {
-				res.json({ err: false, msg: 'Log in successful', user })
+				return !user.comparePassword(req.body.password, user.password) ?
+					res.json({ err: true, msg: 'Incorrect username, password or email.' }) :
+					res.json({ err: false, msg: 'Log in successful', user })
 			}
 		})
-		.then(null, err => res.json({ err: true, msg: err }));
+		.then(null, err => res.json({ err: true, msg: err.toString() }));
 });
 
 router.post('/logout', (req, res) => {
