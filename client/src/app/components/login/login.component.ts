@@ -29,7 +29,7 @@ export class LoginComponent {
         } else {
           this.msgClass = 'alert alert-success alert-dismissible fade show';
           this.msg = result.msg;
-          setTimeout(() => this.router.navigate(['/login']), 2000);
+          setTimeout(() => this.router.navigate(['/']), 1000);
         }
       })
   }
