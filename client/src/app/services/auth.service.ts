@@ -42,11 +42,7 @@ export class AuthService {
   }
 
   tokenExpired() {
-    if (!this.authToken) {
-      return true;
-    } else {
-      return jwt.isTokenExpired(this.authToken);
-    }
+    return jwt.isTokenExpired(localStorage.getItem('token'));
   }
 
 }
