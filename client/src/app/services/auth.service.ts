@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
+import { JwtHelperService } from "@auth0/angular-jwt";
+const jwt = new JwtHelperService();
 
 @Injectable({
   providedIn: 'root'
@@ -27,11 +28,21 @@ export class AuthService {
     return this.http.post<any>('api/auth/login', user);
   }
 
+  logout() {
+    this.authToken = null;
+    this.user = null;
+    localStorage.clear();
+  }
+
   storeAuthToken(token, user) {
     localStorage.setItem('token', token);
     localStorage.setItem('user', user); 
     this.authToken = token;
     this.user = user;
+  }
+
+  tokenExpired() {
+    return jwt.isTokenExpired(this.authToken);
   }
 
 }
