@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CKEditorModule } from 'ng2-ckeditor';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +15,9 @@ import { AuthService } from './services/auth/auth.service';
 import { AuthGuard } from './auth/auth.guard';
 import { NotAuthGuard } from './auth/notAuth.guard';
 import { ProfileComponent } from './components/profile/profile.component';
+import { EditBlogComponent } from './components/edit-blog/edit-blog.component';
+import { NewBlogComponent } from './components/new-blog/new-blog.component';
+import { EditorComponent } from './components/editor/editor.component';
 
 @NgModule({
   declarations: [
@@ -23,14 +27,18 @@ import { ProfileComponent } from './components/profile/profile.component';
     HomeComponent,
     RegisterComponent,
     LoginComponent,
-    ProfileComponent
+    ProfileComponent,
+    EditBlogComponent,
+    NewBlogComponent,
+    EditorComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    CKEditorModule
   ],
   providers: [AuthService, AuthGuard, NotAuthGuard],
   bootstrap: [AppComponent]

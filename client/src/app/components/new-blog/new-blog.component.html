@@ -1,0 +1,7 @@
+<div class="container mb-6">
+	<h1 class="text-center">New Blog</h1>
+	<input class="form-control" placeholder="Blog title" (change)="onInputChange($event)" />
+	<ckeditor [(ngModel)]="ckeditorContent" [config]="{uiColor: '#a4a4a4'}" (change)="onChange($event)"
+		(ready)="onReady($event)" (focus)="onFocus($event)" (blur)="onBlur($event)" debounce="500">
+	</ckeditor>
+</div>

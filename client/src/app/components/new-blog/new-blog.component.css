@@ -1,0 +1,9 @@
+.container {
+	margin-top: 8rem !important;
+	margin-bottom: 6rem !important;
+}
+
+.text-center,
+input {
+	margin-bottom: 2rem;
+}
