@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { BlogService } from '../../services/blog/blog.service';
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: 'app-edit-blog',
@@ -8,32 +12,36 @@ import { Component, OnInit } from '@angular/core';
 
 export class EditBlogComponent implements OnInit {
 
-  private ckeditorContent: string;
-  constructor() {
-    console.log(window.history.state.body)
-    this.ckeditorContent = window.history.state.body;
-  }
+  public Editor = ClassicEditor;
+  public blog = {
+    title: '',
+    body: ''
+  };
 
-  blog;
-
-  ngOnInit() {
+  constructor(private fb: FormBuilder, private BlogService: BlogService, private route: ActivatedRoute) {
     this.blog = window.history.state;
   }
 
-  onReady() {
-    console.log('ready')
+  ngOnInit() {
+    const post = this.route.snapshot.paramMap.get('title').split('-').join(' ');
+    this.BlogService.getPost(post).subscribe(res => this.blog = res.blog);
   }
 
-  onFocus() {
-    console.log('focus')
+  onTitleChange(e) {
+    this.blog.title = this.titleForm.get('title').value;
   }
 
-  onChange() {
-    console.log(`this.ckeditorContent`, this.ckeditorContent)
+  onBodyChange(e) {
+    console.log('change', this.blog.body)
   }
 
-  onBlur() {
-    console.log('blur')
+  onSubmit() {
+    this.blog.title = `<h1>${this.blog.title}</h1>`;
   }
+
+  titleForm = this.fb.group({
+    title: ['', Validators.required]
+  });
 
 }
+

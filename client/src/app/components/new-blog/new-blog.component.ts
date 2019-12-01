@@ -1,34 +1,41 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'app-new-blog',
   templateUrl: './new-blog.component.html',
   styleUrls: ['./new-blog.component.css']
 })
+
 export class NewBlogComponent implements OnInit {
 
-  constructor() { }
+  public Editor = ClassicEditor;
+  constructor(private fb: FormBuilder) { }
 
-  ngOnInit() { }
+  public blog = {
+    title: '',
+    body: ''
+  };
 
-  onInputChange(e) {
-    console.log(e)
+  ngOnInit() {}
+
+  onTitleChange(e) {
+    this.blog.title = this.titleForm.get('title').value;
+    console.log(this.blog.title)
   }
 
-  onReady() {
-    console.log('ready')
+  onBodyChange(e) {
+    console.log('change', this.blog.body)
   }
 
-  onFocus() {
-    console.log('focus')
+  onSubmit() {
+    this.blog.title = `<h1>${this.blog.title}</h1>`;
+
   }
 
-  onChange(e) {
-    console.log('change', e)
-  }
-
-  onBlur() {
-    console.log('blur')
-  }
+  titleForm = this.fb.group({
+    title: ['', Validators.required]
+  });
 
 }

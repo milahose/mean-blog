@@ -1,6 +1,9 @@
 <div class="container mb-6">
 	<h1 class="text-center">Edit Blog</h1>
-	<ckeditor [(ngModel)]="ckeditorContent" [config]="{uiColor: '#a4a4a4'}" (change)="onChange($event)"
-		(ready)="onReady($event)" (focus)="onFocus($event)" (blur)="onBlur($event)" debounce="500">
-	</ckeditor>
+	<form [formGroup]="titleForm">
+		<input formControlName="title" name="title" class="form-control title" placeholder="Blog title"
+			(keyup)="onTitleChange($event)" value="{{blog.title}}" />
+	</form>
+	<ckeditor [(ngModel)]="blog.body" [editor]="Editor" (change)="onBodyChange($event)"></ckeditor>
+	<button class="btn btn-primary submit-btn">Submit</button>
 </div>

@@ -23,6 +23,7 @@ export class ProfileComponent implements OnInit {
 
   handleEditClick(e, post) {
     e.preventDefault();
+    console.log('POST', post)
     let blogTitle = post.title.toLowerCase().split(' ').join('-');
     this.router.navigateByUrl(`/blog/${blogTitle}/edit`, { state: post });
   }

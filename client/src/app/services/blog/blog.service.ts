@@ -18,4 +18,8 @@ export class BlogService {
   getUserPosts(username): Observable<any> {
     return this.http.get<any>(`api/user/@${username}/posts`, { headers: this.headers });
   }
+
+  getPost(title): Observable<any> {
+    return this.http.get<any>(`api/blog/${title}`, { headers: this.headers });
+  }
 }
