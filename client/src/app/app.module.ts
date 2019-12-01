@@ -15,6 +15,7 @@ import { AuthService } from './services/auth/auth.service';
 import { AuthGuard } from './auth/auth.guard';
 import { NotAuthGuard } from './auth/notAuth.guard';
 import { ProfileComponent } from './components/profile/profile.component';
+import { ViewBlogComponent } from './components/view-blog/view-blog.component';
 import { EditBlogComponent } from './components/edit-blog/edit-blog.component';
 import { NewBlogComponent } from './components/new-blog/new-blog.component';
 
@@ -28,7 +29,8 @@ import { NewBlogComponent } from './components/new-blog/new-blog.component';
     LoginComponent,
     ProfileComponent,
     EditBlogComponent,
-    NewBlogComponent
+    NewBlogComponent,
+    ViewBlogComponent
   ],
   imports: [
     BrowserModule,

@@ -22,7 +22,6 @@ export class NewBlogComponent implements OnInit {
 
   onTitleChange(e) {
     this.blog.title = this.titleForm.get('title').value;
-    console.log(this.blog.title)
   }
 
   onBodyChange(e) {

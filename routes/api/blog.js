@@ -17,7 +17,6 @@ router.get('/@username/posts', (req, res) => {
 });
 
 router.post('/edit', (req, res) => {
-	console.log
 	Blog.findOneAndUpdate({
 		title: 'Learning JavaScript',
 		user: req.decoded.userId 

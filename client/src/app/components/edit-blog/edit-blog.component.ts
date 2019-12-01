@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { BlogService } from '../../services/blog/blog.service';
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: 'app-edit-blog',
@@ -18,7 +18,7 @@ export class EditBlogComponent implements OnInit {
     body: ''
   };
 
-  constructor(private fb: FormBuilder, private BlogService: BlogService, private route: ActivatedRoute) {
+  constructor(private fb: FormBuilder, private BlogService: BlogService, private route: ActivatedRoute, private router: Router) {
     this.blog = window.history.state;
   }
 
@@ -37,6 +37,7 @@ export class EditBlogComponent implements OnInit {
       .subscribe(res => {
         console.log('res', res)
       })
+    this.router.navigateByUrl(`/blog/${this.blog.title.toLocaleLowerCase().split(' ').join('-')}`)
   }
 
   titleForm = this.fb.group({
