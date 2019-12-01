@@ -31,12 +31,12 @@ export class EditBlogComponent implements OnInit {
     this.blog.title = this.titleForm.get('title').value;
   }
 
-  onBodyChange(e) {
-    console.log('change', this.blog.body)
-  }
-
-  onSubmit() {
-    this.blog.title = `<h1>${this.blog.title}</h1>`;
+  submitBlogEdits() {
+    this.blog.title = this.blog.title;
+    this.BlogService.editPost(this.blog)
+      .subscribe(res => {
+        console.log('res', res)
+      })
   }
 
   titleForm = this.fb.group({

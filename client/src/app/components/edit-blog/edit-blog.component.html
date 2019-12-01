@@ -4,6 +4,6 @@
 		<input formControlName="title" name="title" class="form-control title" placeholder="Blog title"
 			(keyup)="onTitleChange($event)" value="{{blog.title}}" />
 	</form>
-	<ckeditor [(ngModel)]="blog.body" [editor]="Editor" (change)="onBodyChange($event)"></ckeditor>
-	<button class="btn btn-primary submit-btn">Submit</button>
+	<ckeditor [(ngModel)]="blog.body" [editor]="Editor"></ckeditor>
+	<button class="btn btn-primary submit-btn" (click)="submitBlogEdits()">Submit</button>
 </div>

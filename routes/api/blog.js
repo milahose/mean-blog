@@ -16,6 +16,16 @@ router.get('/@username/posts', (req, res) => {
 		.then(null, err => res.json({ err: true, msg: err.message }))
 });
 
+router.post('/edit', (req, res) => {
+	console.log
+	Blog.findOneAndUpdate({
+		title: 'Learning JavaScript',
+		user: req.decoded.userId 
+	}, req.body, { new: true })
+		.then(blog => res.json({ err: false, blog }))
+		.then(null, err => res.json({ err: true, msg: err.message }))
+})
+
 router.post('/', (req, res) => {
 	Blog.create({
 		...req.body,

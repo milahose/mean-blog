@@ -22,4 +22,8 @@ export class BlogService {
   getPost(title): Observable<any> {
     return this.http.get<any>(`api/blog/${title}`, { headers: this.headers });
   }
+
+  editPost(post): Observable<any> {
+    return this.http.post<any>(`api/blog/edit`, post, { headers: this.headers });
+  }
 }
