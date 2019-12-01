@@ -6,6 +6,7 @@ router.get('/:title', (req, res) => {
 		title: 'Learning JavaScript', 
 		user: req.decoded.userId 
 	})
+		.populate('user')
 		.then(blog => res.json({ err: false, blog }))
 		.then(null, err => res.json({ err: true, msg: err.message }))
 });

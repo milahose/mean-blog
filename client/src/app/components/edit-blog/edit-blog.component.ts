@@ -34,10 +34,9 @@ export class EditBlogComponent implements OnInit {
   submitBlogEdits() {
     this.blog.title = this.blog.title;
     this.BlogService.editPost(this.blog)
-      .subscribe(res => {
-        console.log('res', res)
+      .subscribe(() => {
+        this.router.navigateByUrl(`/blog/${this.blog.title.toLocaleLowerCase().split(' ').join('-')}`)
       })
-    this.router.navigateByUrl(`/blog/${this.blog.title.toLocaleLowerCase().split(' ').join('-')}`)
   }
 
   titleForm = this.fb.group({
