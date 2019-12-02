@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BlogService } from '../../services/blog/blog.service';
 import { CommentService } from '../../services/comment/comment.service';
 import { LikeService } from '../../services/like/like.service';
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -28,7 +28,8 @@ export class ViewBlogComponent implements OnInit {
     private CommentService: CommentService, 
     private LikeService: LikeService,
     private route: ActivatedRoute, 
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    private router: Router) {
     this.blog = window.history.state;
   }
 
@@ -153,6 +154,19 @@ export class ViewBlogComponent implements OnInit {
   stopEditing() {
     this.editing = false;
     this.editingId = null;
+  }
+
+  deletePost(blog) {
+    const deletedBlogId = blog._id;
+    this.BlogService.deletePost(blog._id)
+      .subscribe(res => {
+        if (res.err) {
+          this.msgClass = 'alert alert-danger show';
+          this.msg = res.msg;
+        } else {
+          this.router.navigateByUrl(`/blog`); 
+        }
+      })
   }
 
 }

@@ -17,3 +17,20 @@
 textarea {
 	resize: none;
 }
+
+.modal-header,
+.modal-footer {
+	border: none !important;
+}
+
+.modal-header h5 {
+	width: 100%;
+}
+
+.modal-header button {
+	width: 80px;
+}
+
+.modal-footer button {
+	width: 80px;
+}
