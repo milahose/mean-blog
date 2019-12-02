@@ -39,7 +39,7 @@ export class ProfileComponent implements OnInit {
 
   parseHTML(post, i) {
     let elm = document.querySelector(`.post-body-${i}`);
-    elm.innerHTML = post.body;
+    elm.innerHTML = `${post.body.slice(0, (post.body.length > 300 ? 300 : post.body.length - 4))}...`;
   }
 
   formatDate(date) {
