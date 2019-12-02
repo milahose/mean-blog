@@ -7,12 +7,12 @@ router.post('/', (req, res) => {
 		user: req.decoded.userId
 	})
 		.then(result => res.json(result))
-		.then(null, err => res.json({err: true, msg: err.message}))
+		.then(null, err => res.json({ err: true, msg: err.message }))
 });
 
 router.get('/:title', (req, res) => {
 	Blog.findOne({ 
-		title: 'Learning JavaScript', 
+		title: 'Learning Ruby', 
 		user: req.decoded.userId 
 	})
 		.populate('user')
@@ -28,7 +28,7 @@ router.get('/@username/posts', (req, res) => {
 
 router.post('/edit', (req, res) => {
 	Blog.findOneAndUpdate({
-		title: 'Learning JavaScript',
+		title: req.params.title,
 		user: req.decoded.userId 
 	}, req.body, { new: true })
 		.then(blog => res.json({ err: false, blog }))

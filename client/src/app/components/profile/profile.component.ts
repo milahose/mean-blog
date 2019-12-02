@@ -17,9 +17,7 @@ export class ProfileComponent implements OnInit {
   createdOn = new Date(this.user.createdOn).toLocaleDateString();
   posts;
   msg;
-  updatedPosts;
   msgClass;
-  postDeleted = false;
 
   ngOnInit() {
     this.BlogService.getUserPosts(this.user.username)
@@ -47,7 +45,6 @@ export class ProfileComponent implements OnInit {
           this.msgClass = 'alert alert-danger show';
           this.msg = res.msg;
         } else {
-          this.postDeleted = true;
           this.msgClass = 'alert alert-success show';
           this.msg = res.msg;
           this.posts = this.posts.map(post => {
@@ -55,9 +52,7 @@ export class ProfileComponent implements OnInit {
               return post;
             }
           });
-          // setTimeout(() => location.reload(), 1000)
         }
-        // location.reload()
       })
   }
 
