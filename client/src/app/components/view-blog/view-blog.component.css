@@ -13,3 +13,7 @@
 .like-box button {
 	width: 100%;
 }
+
+textarea {
+	resize: none;
+}

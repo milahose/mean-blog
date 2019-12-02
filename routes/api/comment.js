@@ -12,6 +12,7 @@ router.post('/', (req, res) => {
 
 router.get('/username/:username', (req, res) => {
 	Comment.find({ username: req.params.username })
+		.sort({ date: -1 })
 		.then(result => {
 			if (!result) {
 				res.json({ err: true, msg: 'Unable to find user likes' })
@@ -24,6 +25,7 @@ router.get('/username/:username', (req, res) => {
 
 router.get('/blog/:blogId', (req, res) => {
 	Comment.find({ blog: req.params.blogId })
+		.sort({ date: -1 })
 		.then(result => {
 			if (!result) {
 				res.json({ err: true, msg: 'Unable to find user likes' })

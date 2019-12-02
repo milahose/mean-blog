@@ -3,6 +3,7 @@ import { BlogService } from '../../services/blog/blog.service';
 import { CommentService } from '../../services/comment/comment.service';
 import { LikeService } from '../../services/like/like.service';
 import { ActivatedRoute } from "@angular/router";
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-view-blog',
@@ -14,8 +15,14 @@ export class ViewBlogComponent implements OnInit {
 
   blog;
   comments;
+  msg;
+  msgClass;
 
-  constructor(private BlogService: BlogService, private CommentService: CommentService, private route: ActivatedRoute) {
+  constructor(
+    private BlogService: BlogService, 
+    private CommentService: CommentService, 
+    private route: ActivatedRoute, 
+    private fb: FormBuilder) {
     this.blog = window.history.state;
   }
 
@@ -30,6 +37,36 @@ export class ViewBlogComponent implements OnInit {
       this.CommentService.getBlogComments(res.blog._id)
         .subscribe(res => this.comments = res.result);
     });
+  }
+
+  commentForm = this.fb.group({
+    comment: ['', Validators.required]
+  });
+
+  formatDate(date) {
+    return new Date(date).toString().slice(0, 15);
+  }
+
+  submitComment() {
+    const comment = this.commentForm.get('comment').value;
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    this.CommentService.addComment({
+      user: user._id,
+      blog: this.blog._id,
+      comment: comment,
+      name: `${user.firstname} ${user.lastname}`,
+      username: user.username
+    })
+      .subscribe(res => {
+        if (res.err) {
+          this.msgClass = 'alert alert-danger alert-dismissible fade show';
+          this.msg = res.msg;
+        } else {
+          this.comments.unshift(res.result);
+          this.commentForm.reset();
+        }
+      });
   }
 
 }

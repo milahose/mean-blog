@@ -18,13 +18,22 @@
 
 			<hr>
 
-			<!-- Comments Form -->
 			<div class="card my-4">
 				<h5 class="card-header">Leave a Comment:</h5>
+
+				<div class="col-md-12 show-hide-message">
+					<div [ngClass]="msgClass">
+						{{ msg }}
+						<button [hidden]="!msg" type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</div>
+
 				<div class="card-body">
-					<form>
+					<form [formGroup]="commentForm" (ngSubmit)="submitComment()">
 						<div class="form-group">
-							<textarea class="form-control" rows="3"></textarea>
+							<textarea class="form-control" formControlName="comment" rows="3"></textarea>
 						</div>
 						<button type="submit" class="btn btn-primary">Submit</button>
 					</form>
@@ -35,7 +44,10 @@
 				<div class="media mb-4">
 					<img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
 					<div class="media-body">
-						<h5 class="mt-0">{{comment?.name}}</h5>
+						<h5 class="mt-0">
+							<a [routerLink]="['/profile', comment?.username]">{{comment?.name}} </a>
+							<small>on {{formatDate(comment?.date)}}</small>
+					</h5>
 						{{comment?.comment}}
 					</div>
 				</div>
