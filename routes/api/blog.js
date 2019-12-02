@@ -33,10 +33,7 @@ router.get('/@username/posts', (req, res) => {
 });
 
 router.post('/edit', (req, res) => {
-	Blog.findOneAndUpdate({
-		_id: req.body._id,
-		user: req.decoded.userId 
-	}, req.body, { new: true })
+	Blog.findOneAndUpdate({ _id: req.body._id }, req.body, { new: true })
 		.then(blog => res.json({ err: false, blog }))
 		.then(null, err => res.json({ err: true, msg: err.message }))
 })

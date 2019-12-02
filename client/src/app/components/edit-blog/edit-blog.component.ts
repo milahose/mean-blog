@@ -34,7 +34,7 @@ export class EditBlogComponent implements OnInit {
   submitBlogEdits() {
     this.blog.title = this.blog.title;
     this.BlogService.editPost(this.blog)
-      .subscribe(() => {
+      .subscribe(res => {
         this.router.navigateByUrl(`/blog/${this.blog.title.toLowerCase().split(' ').join('-')}`);
       })
   }
