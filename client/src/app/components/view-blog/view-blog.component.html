@@ -21,7 +21,7 @@
 			<div class="card my-4">
 				<h5 class="card-header">Leave a Comment:</h5>
 
-				<div class="col-md-12 show-hide-message">
+				<div class="col-md-12 show-hide-message mt-1">
 					<div [ngClass]="msgClass">
 						{{ msg }}
 						<button [hidden]="!msg" type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -35,7 +35,7 @@
 						<div class="form-group">
 							<textarea class="form-control" formControlName="comment" rows="3"></textarea>
 						</div>
-						<button type="submit" class="btn btn-primary">Submit</button>
+						<button type="submit" class="btn btn-primary" [disabled]="!commentForm.valid">Submit</button>
 					</form>
 				</div>
 			</div>
@@ -49,6 +49,9 @@
 							<small>on {{formatDate(comment?.date)}}</small>
 					</h5>
 						<div>
+							<div *ngIf="comment?.username !== user.username" class="mt-2">
+								{{comment?.comment}}
+							</div>
 							<div *ngIf="comment?.username === user.username && editingId !== comment?._id" class="mt-2">
 								{{comment?.comment}}
 								<div>
