@@ -31,5 +31,9 @@ export class CommentService {
     return this.http.put<any>(`api/comment`, comment, { headers: this.headers });
   }
 
+  deleteComment(id): Observable<any> {
+    return this.http.delete<any>(`api/comment/${id}`, { headers: this.headers });
+  }
+
 }
 

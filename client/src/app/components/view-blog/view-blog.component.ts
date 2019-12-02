@@ -129,6 +129,21 @@ export class ViewBlogComponent implements OnInit {
     });
   }
 
+  deleteComment(e, postComment) {
+    e.preventDefault();
+    this.stopEditing();
+    this.CommentService.deleteComment(postComment._id).subscribe(res => {
+      if (res.err) {
+        this.msgClass = 'alert alert-danger alert-dismissible fade show';
+        this.msg = res.msg;
+      } else {
+        this.comments = this.comments.filter(comment => {
+          return comment._id !== postComment._id;
+        });
+      }
+    });
+  }
+
   editClicked(e, comment) {
     e.preventDefault();
     this.editing = true;

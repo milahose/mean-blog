@@ -52,7 +52,7 @@
 							<div *ngIf="comment?.username === user.username && editingId !== comment?._id" class="mt-2">
 								{{comment?.comment}}
 								<div>
-									<a href="" class="text-danger mr-1">Delete</a>
+									<a href="" class="text-danger mr-1" (click)="deleteComment($event, comment)">Delete</a>
 									<a href="" class="text-primary ml-1" (click)="editClicked($event, comment)">Edit</a>
 								</div>
 							</div>

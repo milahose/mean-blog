@@ -48,4 +48,19 @@ router.put('/', (req, res) => {
 		.then(null, err => res.json({ err: true, msg: err.message }))
 });
 
+router.delete('/:id', (req, res) => {
+	Comment.findOneAndDelete({
+		_id: req.params.id,
+		user: req.decoded.userId
+	})
+		.then(result => {
+			if (!result) {
+				res.json({ err: true, msg: 'Unable to find user likes' })
+			} else {
+				res.json({ err: false, msg: 'Successfully deleted like.' })
+			}
+		})
+		.then(null, err => res.json({ err: true, msg: err.message }))
+});
+
 module.exports = router;
