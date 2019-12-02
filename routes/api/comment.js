@@ -15,7 +15,7 @@ router.get('/username/:username', (req, res) => {
 		.sort({ date: -1 })
 		.then(result => {
 			if (!result) {
-				res.json({ err: true, msg: 'Unable to find user likes' })
+				res.json({ err: true, msg: 'Unable to find user comments' })
 			} else {
 				res.json({ err: false, msg: 'Success', result })
 			}
@@ -28,7 +28,7 @@ router.get('/blog/:blogId', (req, res) => {
 		.sort({ date: -1 })
 		.then(result => {
 			if (!result) {
-				res.json({ err: true, msg: 'Unable to find user likes' })
+				res.json({ err: true, msg: 'Unable to find user comments' })
 			} else {
 				res.json({ err: false, msg: 'Success', result })
 			}
@@ -43,7 +43,7 @@ router.put('/', (req, res) => {
 	}, req.body, { new: true })
 		.then(result => {
 			if (!result) {
-				res.json({ err: true, msg: 'Unable to find user likes' })
+				res.json({ err: true, msg: 'Unable to find user comments' })
 			} else {
 				res.json({ err: false, msg: 'Success', result })
 			}

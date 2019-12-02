@@ -15,12 +15,16 @@ export class ViewBlogComponent implements OnInit {
 
   blog;
   comments;
+  likes;
   msg;
   msgClass;
+  likeCount = 0;
+  user = JSON.parse(localStorage.getItem('user'));
 
   constructor(
     private BlogService: BlogService, 
     private CommentService: CommentService, 
+    private LikeService: LikeService,
     private route: ActivatedRoute, 
     private fb: FormBuilder) {
     this.blog = window.history.state;
@@ -36,6 +40,12 @@ export class ViewBlogComponent implements OnInit {
 
       this.CommentService.getBlogComments(res.blog._id)
         .subscribe(res => this.comments = res.result);
+
+      this.LikeService.getBlogLikes(res.blog._id)
+        .subscribe(res => {
+          this.likes = res.result;
+          this.likeCount = res.result.length;
+        });
     });
   }
 
@@ -47,16 +57,36 @@ export class ViewBlogComponent implements OnInit {
     return new Date(date).toString().slice(0, 15);
   }
 
+  updateLikes() {
+    const userLiked = this.likes.filter(like => like.user === this.user._id);
+    console.log('userLiked', userLiked)
+    if (!userLiked.length) {
+      this.LikeService.addLike({ blog: this.blog._id })
+        .subscribe(res => {
+          if (!res.err) {
+            this.likeCount++;
+            this.likes.unshift(res.result)
+          }
+        });
+    } else {
+      this.LikeService.deleteLike(userLiked[0]._id)
+        .subscribe(res => {
+          if (!res.err) {
+            this.likeCount--;
+            this.likes = this.likes.filter(like => like.user !== this.user._id);
+          }
+        });
+    }
+  }
+
   submitComment() {
     const comment = this.commentForm.get('comment').value;
-    const user = JSON.parse(localStorage.getItem('user'));
-
     this.CommentService.addComment({
-      user: user._id,
+      user: this.user._id,
       blog: this.blog._id,
       comment: comment,
-      name: `${user.firstname} ${user.lastname}`,
-      username: user.username
+      name: `${this.user.firstname} ${this.user.lastname}`,
+      username: this.user.username
     })
       .subscribe(res => {
         if (res.err) {
