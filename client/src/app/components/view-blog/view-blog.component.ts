@@ -10,7 +10,6 @@ import { ActivatedRoute } from "@angular/router";
 
 export class ViewBlogComponent implements OnInit {
 
-  user;
   blog;
 
   constructor(private BlogService: BlogService, private route: ActivatedRoute) {
@@ -23,7 +22,6 @@ export class ViewBlogComponent implements OnInit {
       let blogBody = document.getElementById('blog-body');
       this.blog = res.blog;
       this.blog.date = new Date(res.blog.date).toString().slice(0, 15);
-      this.user = res.blog.user;
       blogBody.innerHTML = this.blog.body;
     });
   }
