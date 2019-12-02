@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BlogService } from '../../services/blog/blog.service';
 import { AuthService } from '../../services/auth/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Options } from 'selenium-webdriver/chrome';
 
 @Component({
   selector: 'app-profile',
@@ -34,6 +35,11 @@ export class ProfileComponent implements OnInit {
         this.user = res.result.user;
         this.posts = res.result.blogs;
       });
+  }
+
+  parseHTML(post, i) {
+    let elm = document.querySelector(`.post-body-${i}`);
+    elm.innerHTML = post.body;
   }
 
   formatDate(date) {

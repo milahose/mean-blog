@@ -15,15 +15,17 @@
 				</div>
 			</div>
 
-			<div *ngFor="let post of posts">
+			<div *ngFor="let post of posts; let i = index;">
 				<div class="card mb-4" *ngIf="post">
 					<img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
 					<div class="card-body">
 						<h2 class="card-title"><a [routerLink]="['/blog', post?.title.toLowerCase().split(' ').join('-')]">{{post?.title}}</a></h2>
 						<p>By <a [routerLink]="['/profile', post.username]">{{user?.firstname}} {{user?.lastname}}</a> {{formatDate(post?.date)}}</p>
-						<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque,
-							nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus
-							possimus, veniam magni quis...</p>
+						<p class="card-text">
+							<span [ngClass]="['post-body-' + i]"></span>
+							{{parseHTML(post, i)}}
+							<a [routerLink]="['/blog', post.title.toLowerCase().split(' ').join('-')]">Read More &#8811;</a>
+						</p>
 						<div class="tags">
 							<a href="" class="badge badge-pill badge-info m-1">JavaScript</a>
 							<a href="" class="badge badge-pill badge-info m-1">React</a>
