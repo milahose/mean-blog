@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
+
 export class ProfileComponent implements OnInit {
 
   constructor(private BlogService: BlogService, private router: Router) { }
@@ -15,15 +16,20 @@ export class ProfileComponent implements OnInit {
   name = `${this.user.firstname} ${this.user.lastname}`
   createdOn = new Date(this.user.createdOn).toLocaleDateString();
   posts;
+  msg;
+  updatedPosts;
+  msgClass;
+  postDeleted = false;
 
   ngOnInit() {
     this.BlogService.getUserPosts(this.user.username)
       .subscribe(res => this.posts = res.result.blogs);
+      // .subscribe(res => console.log('post', res.result.blogs))
+
   }
 
   handleEditClick(e, post) {
     e.preventDefault();
-    console.log('POST', post)
     let blogTitle = post.title.toLowerCase().split(' ').join('-');
     this.router.navigateByUrl(`/blog/${blogTitle}/edit`, { state: post });
   }
@@ -31,6 +37,32 @@ export class ProfileComponent implements OnInit {
   handleNewBlogClick(e) {
     e.preventDefault();
     this.router.navigateByUrl(`/blog/new`);  
+  }
+
+  deletePost(post) {
+    const deletedPostId = post._id;
+    this.BlogService.deletePost(post._id)
+      .subscribe(res => {
+        if (res.err) {
+          this.msgClass = 'alert alert-danger show';
+          this.msg = res.msg;
+        } else {
+          this.postDeleted = true;
+          this.msgClass = 'alert alert-success show';
+          this.msg = res.msg;
+          this.posts = this.posts.map(post => {
+            if (post._id !== deletedPostId) {
+              return post;
+            }
+          });
+          // setTimeout(() => location.reload(), 1000)
+        }
+        // location.reload()
+      })
+  }
+
+  postDeletedAcknowledegment() {
+    this.posts = this.updatedPosts;
   }
 
 }

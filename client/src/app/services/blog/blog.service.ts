@@ -26,4 +26,8 @@ export class BlogService {
   editPost(post): Observable<any> {
     return this.http.post<any>(`api/blog/edit`, post, { headers: this.headers });
   }
+
+  deletePost(id): Observable<any> {
+    return this.http.delete<any>(`api/blog/delete/${id}`, { headers: this.headers });
+  }
 }
