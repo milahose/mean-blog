@@ -5,6 +5,8 @@ require('dotenv').config();
 const auth = require('./auth');
 const user = require('./user');
 const blog = require('./blog');
+const like = require('./like');
+const comment = require('./comment');
 
 router.use('/auth', auth);
 
@@ -29,5 +31,7 @@ router.use((req, res, next) => {
 
 router.use('/user', user);
 router.use('/blog', blog);
+router.use('/like', like);
+router.use('/comment', comment);
 
 module.exports = router;
