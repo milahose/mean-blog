@@ -11,7 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 export class ProfileComponent implements OnInit {
 
-  constructor(private BlogService: BlogService, private AuthService: AuthService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private BlogService: BlogService, private AuthService: AuthService, private router: Router, private route: ActivatedRoute) {}
 
   loggedInUser = JSON.parse(localStorage.getItem('user'));
   user;

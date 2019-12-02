@@ -83,6 +83,20 @@
 					</button>
 				</div>
 			</div>
+
+			<div class="card my-4" *ngIf="blog?.username === user.username">
+				<h5 class="card-header text-center">Edit This Post</h5>
+				<div class="card-body">
+					<button [routerLink]="['edit']" type="click" class="btn btn-sm btn-primary ml-1">Edit</button>
+				</div>
+			</div>
+
+			<div class="card my-4">
+				<h5 class="card-header text-center">Delete This Post</h5>
+				<div class="card-body">
+					<button type="click" class="btn btn-sm btn-danger ml-1">Delete</button>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
