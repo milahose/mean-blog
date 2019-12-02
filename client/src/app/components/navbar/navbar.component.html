@@ -16,7 +16,7 @@
 						{{ name }}
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" routerLink="/profile">Profile</a>
+						<a class="dropdown-item" [routerLink]="['/profile', user?.username]">Profile</a>
 						<a class="dropdown-item" routerLink="/" (click)="AuthService.logout()">Sign Out</a>
 					</div>
 				</li>

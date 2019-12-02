@@ -14,6 +14,10 @@ export class BlogService {
     'Content-Type': 'application/json',
     'authorization': localStorage.getItem('token')
   }
+  
+  getAllPosts(): Observable<any> {
+    return this.http.get<any>(`api/blog/`, { headers: this.headers });
+  }
 
   getUserPosts(username): Observable<any> {
     return this.http.get<any>(`api/user/@${username}/posts`, { headers: this.headers });

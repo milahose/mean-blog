@@ -13,6 +13,7 @@ import { Router } from "@angular/router";
 export class NewBlogComponent implements OnInit {
 
   public Editor = ClassicEditor;
+  user = JSON.parse(localStorage.getItem('user'));
   constructor(private fb: FormBuilder, private router: Router, private BlogService: BlogService) { }
 
   msg;
@@ -20,7 +21,8 @@ export class NewBlogComponent implements OnInit {
   public blog = {
     title: '',
     body: '',
-    username: JSON.parse(localStorage.getItem('user')).username
+    username: this.user.username,
+    name: `${this.user.firstname} ${this.user.lastname}`
   };
 
   ngOnInit() {}

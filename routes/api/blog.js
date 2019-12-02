@@ -10,19 +10,24 @@ router.post('/', (req, res) => {
 		.then(null, err => res.json({ err: true, msg: err.message }))
 });
 
+router.get('/', (req, res) => {
+	Blog.find({})
+		.sort({ date: -1 })
+		.then(blog => res.json({ err: false, blog }))
+		.then(null, err => res.json({ err: true, msg: err.message }))
+})
+
 router.get('/:title', (req, res) => {
 	const title = req.params.title.trim().split('-').join(' ');
-	Blog.findOne({ 
-		title: new RegExp(`^${title}$`, 'i'),
-		user: req.decoded.userId 
-	})
-		.populate('user')
+	Blog.findOne({ title: new RegExp(`^${title}$`, 'i') })
+		.sort({ date: -1 })
 		.then(blog => res.json({ err: false, blog }))
 		.then(null, err => res.json({ err: true, msg: err.message }))
 });
 
 router.get('/@username/posts', (req, res) => {
 	Blog.find({ username: req.params.username })
+		.sort({ date: -1 })
 		.then(result => res.json(result))
 		.then(null, err => res.json({ err: true, msg: err.message }))
 });

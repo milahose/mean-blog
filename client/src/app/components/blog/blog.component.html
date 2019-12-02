@@ -3,14 +3,19 @@
   <div class="row mt-4">
     <div class="col-md-8 mt-4">
 
-      <div class="card mb-4">
-        <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
-        <div class="card-body">
-          <h2 class="card-title"><a routerLink="/blog/learning-javascript">Post Title</a></h2>
-          <p>By <a href="">Some Person</a> on December 1, 2019</p>
-          <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque,
-            nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus
-            possimus, veniam magni quis... <a href="">Read More &#187;</a></p>
+      <div *ngFor="let post of posts">
+        <div class="card mb-4" *ngIf="post">
+          <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
+          <div class="card-body">
+            <h2 class="card-title"><a
+                [routerLink]="['/blog', post.title.toLowerCase().split(' ').join('-')]">{{post?.title}}</a></h2>
+            <p>By <a [routerLink]="['/profile', post.username]">@{{post.username}}</a> on December 1, 2019</p>
+            <p class="card-text">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque,
+              nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus
+              possimus, veniam magni quis... 
+              <a [routerLink]="['/blog', post.title.toLowerCase().split(' ').join('-')]">Read More &#8811;</a>
+            </p>
             <div class="tags">
               <a href="" class="badge badge-pill badge-info m-1">JavaScript</a>
               <a href="" class="badge badge-pill badge-info m-1">React</a>
@@ -18,54 +23,9 @@
               <a href="" class="badge badge-pill badge-info m-1">PHP</a>
               <a href="" class="badge badge-pill badge-info m-1">Ruby</a>
             </div>
-        </div>
-      </div>
-
-      <div class="card mb-4">
-        <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
-        <div class="card-body">
-          <h2 class="card-title"><a href="">Post Title</a></h2>
-          <p>By <a href="">Some Person</a> on December 1, 2019</p>
-          <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque,
-            nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus
-            possimus, veniam magni quis... <a href="">Read More &#187;</a></p>
-          <div class="tags">
-            <a href="" class="badge badge-pill badge-info m-1">JavaScript</a>
-            <a href="" class="badge badge-pill badge-info m-1">React</a>
-            <a href="" class="badge badge-pill badge-info m-1">Nodejs</a>
-            <a href="" class="badge badge-pill badge-info m-1">PHP</a>
-            <a href="" class="badge badge-pill badge-info m-1">Ruby</a>
           </div>
         </div>
       </div>
-
-      <div class="card mb-4">
-        <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
-        <div class="card-body">
-          <h2 class="card-title"><a href="">Post Title</a></h2>
-          <p>By <a href="">Some Person</a> on December 1, 2019</p>
-          <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque,
-            nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus
-            possimus, veniam magni quis... <a href="">Read More &#187;</a></p>
-          <div class="tags">
-            <a href="" class="badge badge-pill badge-info m-1">JavaScript</a>
-            <a href="" class="badge badge-pill badge-info m-1">React</a>
-            <a href="" class="badge badge-pill badge-info m-1">Nodejs</a>
-            <a href="" class="badge badge-pill badge-info m-1">PHP</a>
-            <a href="" class="badge badge-pill badge-info m-1">Ruby</a>
-          </div>
-        </div>
-      </div>
-
-      <ul class="pagination justify-content-center mb-4">
-        <li class="page-item">
-          <a class="page-link" href="#">&larr; Older</a>
-        </li>
-        <li class="page-item disabled">
-          <a class="page-link" href="#">Newer &rarr;</a>
-        </li>
-      </ul>
-
     </div>
 
     <div class="col-md-4">

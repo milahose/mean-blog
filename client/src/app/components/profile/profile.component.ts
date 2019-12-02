@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BlogService } from '../../services/blog/blog.service';
-import { Router } from '@angular/router';
-import { ResourceLoader } from '@angular/compiler';
+import { AuthService } from '../../services/auth/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -11,20 +11,33 @@ import { ResourceLoader } from '@angular/compiler';
 
 export class ProfileComponent implements OnInit {
 
-  constructor(private BlogService: BlogService, private router: Router) { }
+  constructor(private BlogService: BlogService, private AuthService: AuthService, private router: Router, private route: ActivatedRoute) { }
 
-  user = JSON.parse(localStorage.getItem('user'));
-  name = `${this.user.firstname} ${this.user.lastname}`
-  createdOn = new Date(this.user.createdOn).toLocaleDateString();
+  loggedInUser = JSON.parse(localStorage.getItem('user'));
+  user;
+  allowEdits;
+  createdOn;
   posts;
   msg;
   msgClass;
 
   ngOnInit() {
-    this.BlogService.getUserPosts(this.user.username)
-      .subscribe(res => this.posts = res.result.blogs);
-      // .subscribe(res => console.log('post', res.result.blogs))
+    this.BlogService.getUserPosts(this.route.snapshot.paramMap.get('username'))
+      .subscribe(res => {
+        if (res.result.user.username === this.loggedInUser.username) {
+          this.allowEdits = true;
+          this.createdOn = new Date(res.result.user.createdOn).toLocaleDateString();
+        } else {
+          this.allowEdits = false;  
+        }
 
+        this.user = res.result.user;
+        this.posts = res.result.blogs;
+      });
+  }
+
+  formatDate(date) {
+    return new Date(date).toString().slice(0, 15);
   }
 
   handleEditClick(e, post) {
@@ -56,10 +69,6 @@ export class ProfileComponent implements OnInit {
           setTimeout(() => location.reload(), 500);
         }
       })
-  }
-
-  postDeletedAcknowledegment() {
-    this.posts = this.updatedPosts;
   }
 
 }
