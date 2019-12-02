@@ -21,7 +21,7 @@ export class ProfileComponent implements OnInit {
   msg;
   msgClass;
 
-  ngOnInit() {
+  ngOnInit() { 
     this.BlogService.getUserPosts(this.route.snapshot.paramMap.get('username'))
       .subscribe(res => {
         if (res.result.user.username === this.loggedInUser.username) {
