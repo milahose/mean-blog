@@ -10,11 +10,20 @@ router.post('/', (req, res) => {
 		.then(null, err => res.json({ err: true, msg: err.message }))
 });
 
-router.get('/', (req, res) => {
-	Comment.findOne({
-		...req.body,
-		user: req.decoded.userId
-	})
+router.get('/username/:username', (req, res) => {
+	Comment.find({ username: req.params.username })
+		.then(result => {
+			if (!result) {
+				res.json({ err: true, msg: 'Unable to find user likes' })
+			} else {
+				res.json({ err: false, msg: 'Success', result })
+			}
+		})
+		.then(null, err => res.json({ err: true, msg: err.message }))
+});
+
+router.get('/blog/:blogId', (req, res) => {
+	Comment.find({ blog: req.params.blogId })
 		.then(result => {
 			if (!result) {
 				res.json({ err: true, msg: 'Unable to find user likes' })

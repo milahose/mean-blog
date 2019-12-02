@@ -13,8 +13,9 @@ import { ActivatedRoute } from "@angular/router";
 export class ViewBlogComponent implements OnInit {
 
   blog;
+  comments;
 
-  constructor(private BlogService: BlogService, private route: ActivatedRoute) {
+  constructor(private BlogService: BlogService, private CommentService: CommentService, private route: ActivatedRoute) {
     this.blog = window.history.state;
   }
 
@@ -25,6 +26,9 @@ export class ViewBlogComponent implements OnInit {
       this.blog = res.blog;
       this.blog.date = new Date(res.blog.date).toString().slice(0, 15);
       blogBody.innerHTML = this.blog.body;
+
+      this.CommentService.getBlogComments(res.blog._id)
+        .subscribe(res => this.comments = res.result);
     });
   }
 
