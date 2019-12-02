@@ -6,7 +6,7 @@ router.post('/', (req, res) => {
 		...req.body,
 		user: req.decoded.userId
 	})
-		.then(like => res.json({ err: false, msg: 'Success', like }))
+		.then(result => res.json({ err: false, msg: 'Success', result }))
 		.then(null, err => res.json({ err: true, msg: err.message }))
 });
 
@@ -29,7 +29,7 @@ router.put('/', (req, res) => {
 	Like.findOneAndUpdate({
 		blog: req.body.blog,
 		user: req.decoded.userId
-	}, req.body)
+	}, req.body, { new: true })
 		.then(result => {
 			if (!result) {
 				res.json({ err: true, msg: 'Unable to find user likes' })
