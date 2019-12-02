@@ -14,5 +14,8 @@
 		<input formControlName="title" name="title" class="form-control title" placeholder="Blog title" (keyup)="onTitleChange($event)" />
 	</form>
 	<ckeditor [(ngModel)]="blog.body" [editor]="Editor"></ckeditor>
-	<button class="btn btn-primary submit-btn" (click)="submitBlog()">Submit</button>
+	<div>
+		<button class="btn btn-danger cancel-btn" (click)="goBack()">Cancel</button>
+		<button class="btn btn-primary submit-btn pull-right" (click)="submitBlog()">Submit</button>
+	</div>
 </div>

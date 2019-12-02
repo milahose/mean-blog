@@ -39,6 +39,10 @@ export class EditBlogComponent implements OnInit {
       })
   }
 
+  goBack() {
+    window.history.back();
+  }
+
   titleForm = this.fb.group({
     title: ['', Validators.required]
   });
