@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { BlogService } from '../../services/blog/blog.service';
 import { AuthService } from '../../services/auth/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Options } from 'selenium-webdriver/chrome';
 
 @Component({
   selector: 'app-profile',

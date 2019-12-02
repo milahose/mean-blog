@@ -17,4 +17,13 @@ export class BlogComponent implements OnInit {
       .subscribe(res => this.posts = res.blog);
   }
 
+  parseHTML(post, i) {
+    let elm = document.querySelector(`.post-body-${i}`);
+    elm.innerHTML = `${post.body.slice(0, (post.body.length > 300 ? 300 : post.body.length - 4))}...`;
+  }
+
+  formatDate(date) {
+    return new Date(date).toString().slice(0, 15);
+  }
+
 }
