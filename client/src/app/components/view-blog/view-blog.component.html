@@ -91,7 +91,7 @@
 				</div>
 			</div>
 
-			<div class="card my-4">
+			<div class="card my-4" *ngIf="blog?.username === user.username">
 				<h5 class="card-header text-center">Delete This Post</h5>
 				<div class="card-body">
 					<button type="click" class="btn btn-sm btn-danger ml-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
