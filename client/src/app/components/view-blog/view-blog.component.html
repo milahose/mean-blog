@@ -48,7 +48,23 @@
 							<a [routerLink]="['/profile', comment?.username]">{{comment?.name}} </a>
 							<small>on {{formatDate(comment?.date)}}</small>
 					</h5>
-						{{comment?.comment}}
+						<div>
+							<div *ngIf="comment?.username === user.username && editingId !== comment?._id" class="mt-2">
+								{{comment?.comment}}
+								<div>
+									<a href="" class="text-danger mr-1">Delete</a>
+									<a href="" class="text-primary ml-1" (click)="editClicked($event, comment)">Edit</a>
+								</div>
+							</div>
+						</div>
+						<form [formGroup]="editCommentForm" (ngSubmit)="editComment(comment)" 
+							*ngIf="comment?.username === user.username && editing && editingId === comment?._id">
+							<div class="form-group">
+								<textarea class="form-control" formControlName="comment" rows="3" value="{{comment?.comment}}"></textarea>
+							</div>
+							<button type="submit" class="btn btn-sm btn-danger mr-1" (click)="stopEditing()">Cancel</button>
+							<button type="submit" class="btn btn-sm btn-primary ml-1">Submit</button>
+						</form>
 					</div>
 				</div>
 			</div>

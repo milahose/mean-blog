@@ -15,7 +15,7 @@ router.get('/username/:username', (req, res) => {
 		.sort({ date: -1 })
 		.then(result => {
 			if (!result) {
-				res.json({ err: true, msg: 'Unable to find user comments' })
+				res.json({ err: true, msg: 'Unable to find user comments.' })
 			} else {
 				res.json({ err: false, msg: 'Success', result })
 			}
@@ -28,7 +28,7 @@ router.get('/blog/:blogId', (req, res) => {
 		.sort({ date: -1 })
 		.then(result => {
 			if (!result) {
-				res.json({ err: true, msg: 'Unable to find user comments' })
+				res.json({ err: true, msg: 'Unable to find user comments.' })
 			} else {
 				res.json({ err: false, msg: 'Success', result })
 			}
@@ -37,13 +37,10 @@ router.get('/blog/:blogId', (req, res) => {
 });
 
 router.put('/', (req, res) => {
-	Comment.findOneAndUpdate({
-		blog: req.body.blog,
-		user: req.decoded.userId
-	}, req.body, { new: true })
+	Comment.findOneAndUpdate({ _id: req.body._id }, req.body, { new: true })
 		.then(result => {
 			if (!result) {
-				res.json({ err: true, msg: 'Unable to find user comments' })
+				res.json({ err: true, msg: 'Unable to find user comments.' })
 			} else {
 				res.json({ err: false, msg: 'Success', result })
 			}

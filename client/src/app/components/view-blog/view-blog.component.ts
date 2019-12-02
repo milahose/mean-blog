@@ -19,6 +19,8 @@ export class ViewBlogComponent implements OnInit {
   msg;
   msgClass;
   likeCount = 0;
+  editing = false;
+  editingId;
   user = JSON.parse(localStorage.getItem('user'));
 
   constructor(
@@ -50,6 +52,10 @@ export class ViewBlogComponent implements OnInit {
   }
 
   commentForm = this.fb.group({
+    comment: ['', Validators.required]
+  });
+
+  editCommentForm = this.fb.group({
     comment: ['', Validators.required]
   });
 
@@ -97,6 +103,41 @@ export class ViewBlogComponent implements OnInit {
           this.commentForm.reset();
         }
       });
+  }
+
+  editComment(postComment) {
+    this.stopEditing();
+    const updatedComment = this.editCommentForm.get('comment').value;
+    this.comments = this.comments.map(comment => {
+      if (comment._id === postComment._id) {
+        comment.comment = updatedComment;
+        return comment;
+      }
+      return comment;
+    });
+
+    this.CommentService.updateComment({
+      _id: postComment._id,
+      user: this.user._id,
+      blog: this.blog._id,
+      comment: updatedComment
+    }).subscribe(res => {
+      if (res.err) {
+        this.msgClass = 'alert alert-danger alert-dismissible fade show';
+        this.msg = res.msg;
+      }
+    });
+  }
+
+  editClicked(e, comment) {
+    e.preventDefault();
+    this.editing = true;
+    this.editingId = comment._id;
+  }
+
+  stopEditing() {
+    this.editing = false;
+    this.editingId = null;
   }
 
 }
