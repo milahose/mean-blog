@@ -12,6 +12,9 @@ import { HomeComponent } from './components/home/home.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthService } from './services/auth/auth.service';
+import { BlogService } from './services/blog/blog.service';
+import { CommentService } from './services/comment/comment.service';
+import { LikeService } from './services/like/like.service';
 import { AuthGuard } from './auth/auth.guard';
 import { NotAuthGuard } from './auth/notAuth.guard';
 import { ProfileComponent } from './components/profile/profile.component';
@@ -40,7 +43,14 @@ import { NewBlogComponent } from './components/new-blog/new-blog.component';
     AppRoutingModule,
     CKEditorModule
   ],
-  providers: [AuthService, AuthGuard, NotAuthGuard],
+  providers: [
+    AuthService, 
+    BlogService, 
+    CommentService, 
+    LikeService, 
+    AuthGuard, 
+    NotAuthGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

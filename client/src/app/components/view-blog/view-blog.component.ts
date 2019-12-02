@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BlogService } from '../../services/blog/blog.service';
+import { CommentService } from '../../services/comment/comment.service';
+import { LikeService } from '../../services/like/like.service';
 import { ActivatedRoute } from "@angular/router";
 
 @Component({
