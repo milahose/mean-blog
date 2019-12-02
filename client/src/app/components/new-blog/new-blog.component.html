@@ -1,8 +1,18 @@
 <div class="container mb-6">
 	<h1 class="text-center">New Blog</h1>
+
+	<div class="col-md-12 show-hide-message">
+		<div [ngClass]="msgClass">
+			{{ msg }}
+			<button [hidden]="!msg" type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+	</div>
+
 	<form [formGroup]="titleForm">
 		<input formControlName="title" name="title" class="form-control title" placeholder="Blog title" (keyup)="onTitleChange($event)" />
 	</form>
-	<ckeditor [(ngModel)]="blog.body" [editor]="Editor" (change)="onBodyChange($event)"></ckeditor>
-	<button class="btn btn-primary submit-btn">Submit</button>
+	<ckeditor [(ngModel)]="blog.body" [editor]="Editor"></ckeditor>
+	<button class="btn btn-primary submit-btn" (click)="submitBlog()">Submit</button>
 </div>

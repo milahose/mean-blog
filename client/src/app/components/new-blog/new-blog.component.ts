@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { BlogService } from '../../services/blog/blog.service';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-new-blog',
@@ -11,11 +13,14 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 export class NewBlogComponent implements OnInit {
 
   public Editor = ClassicEditor;
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private router: Router, private BlogService: BlogService) { }
 
+  msg;
+  msgClass;
   public blog = {
     title: '',
-    body: ''
+    body: '',
+    username: JSON.parse(localStorage.getItem('user')).username
   };
 
   ngOnInit() {}
@@ -24,13 +29,19 @@ export class NewBlogComponent implements OnInit {
     this.blog.title = this.titleForm.get('title').value;
   }
 
-  onBodyChange(e) {
-    console.log('change', this.blog.body)
-  }
-
-  onSubmit() {
-    this.blog.title = `<h1>${this.blog.title}</h1>`;
-
+  submitBlog() {
+    this.blog.title = this.blog.title;
+    this.BlogService.addPost(this.blog)
+      .subscribe(res => {
+        if (res.err) {
+          this.msgClass = 'alert alert-danger show';
+          this.msg = res.msg;
+        } else {
+          this.msgClass = 'alert alert-success show';
+          this.msg = res.msg;
+          this.router.navigateByUrl(`/blog/${this.blog.title.toLowerCase().split(' ').join('-')}`);
+        }
+      })
   }
 
   titleForm = this.fb.group({

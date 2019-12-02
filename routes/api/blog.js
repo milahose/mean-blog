@@ -11,8 +11,9 @@ router.post('/', (req, res) => {
 });
 
 router.get('/:title', (req, res) => {
+	const title = req.params.title.trim().split('-').join(' ');
 	Blog.findOne({ 
-		title: 'Learning Ruby', 
+		title: new RegExp(`^${title}$`, 'i'),
 		user: req.decoded.userId 
 	})
 		.populate('user')
@@ -28,7 +29,7 @@ router.get('/@username/posts', (req, res) => {
 
 router.post('/edit', (req, res) => {
 	Blog.findOneAndUpdate({
-		title: req.params.title,
+		_id: req.body._id,
 		user: req.decoded.userId 
 	}, req.body, { new: true })
 		.then(blog => res.json({ err: false, blog }))

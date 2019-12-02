@@ -23,7 +23,7 @@ export class EditBlogComponent implements OnInit {
   }
 
   ngOnInit() {
-    const post = this.route.snapshot.paramMap.get('title').split('-').join(' ');
+    const post = this.route.snapshot.paramMap.get('title');
     this.BlogService.getPost(post).subscribe(res => this.blog = res.blog);
   }
 
@@ -35,7 +35,7 @@ export class EditBlogComponent implements OnInit {
     this.blog.title = this.blog.title;
     this.BlogService.editPost(this.blog)
       .subscribe(() => {
-        this.router.navigateByUrl(`/blog/${this.blog.title.toLocaleLowerCase().split(' ').join('-')}`)
+        this.router.navigateByUrl(`/blog/${this.blog.title.toLowerCase().split(' ').join('-')}`);
       })
   }
 

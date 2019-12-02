@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BlogService } from '../../services/blog/blog.service';
 import { Router } from '@angular/router';
+import { ResourceLoader } from '@angular/compiler';
 
 @Component({
   selector: 'app-profile',
@@ -52,6 +53,7 @@ export class ProfileComponent implements OnInit {
               return post;
             }
           });
+          setTimeout(() => location.reload(), 500);
         }
       })
   }

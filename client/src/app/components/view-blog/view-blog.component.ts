@@ -18,7 +18,7 @@ export class ViewBlogComponent implements OnInit {
   }
 
   ngOnInit() {
-    const post = this.route.snapshot.paramMap.get('title').split('-').join(' ');
+    const post = this.route.snapshot.paramMap.get('title');
     this.BlogService.getPost(post).subscribe(res => {
       let blogBody = document.getElementById('blog-body');
       this.blog = res.blog;
