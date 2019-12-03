@@ -10,10 +10,10 @@
             <h2 class="card-title"><a
                 [routerLink]="['/blog', post.title.toLowerCase().split(' ').join('-')]">{{post?.title}}</a></h2>
             <p>By <a [routerLink]="['/profile', post.username]">{{post?.name}}</a>
-              {{formatDate(post?.date)}}</p>
+              {{SharedService.formatDate(post?.date)}}</p>
             <p class="card-text">
               <span [ngClass]="['post-body-' + i]"></span>
-              {{parseHTML(post, i)}}
+              {{SharedService.parseHTML(post, 'post-body', i)}}
               <a [routerLink]="['/blog', post.title.toLowerCase().split(' ').join('-')]">Read More &#8811;</a>
             </p>
             <div class="tags">

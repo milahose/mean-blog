@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BlogService } from '../../services/blog/blog.service';
 import { LikeService } from '../../services/like/like.service';
 import { CommentService } from '../../services/comment/comment.service';
+import { SharedService } from '../../services/shared/shared.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -17,7 +18,8 @@ export class ProfileComponent implements OnInit {
     private LikeService: LikeService, 
     private CommentService: CommentService, 
     private router: Router, 
-    private route: ActivatedRoute) {}
+    private route: ActivatedRoute,
+    private SharedService: SharedService) {}
 
   loggedInUser = JSON.parse(localStorage.getItem('user'));
   username = this.route.snapshot.paramMap.get('username');
@@ -63,15 +65,6 @@ export class ProfileComponent implements OnInit {
         });
         this.likes = userLikes;
       });
-  }
-
-  parseHTML(post, className, i) {
-    let elm = document.querySelector(`.${className}-${i}`);
-    elm.innerHTML = `${post.body.slice(0, (post.body.length > 300 ? 300 : post.body.length - 4))}...`;
-  }
-
-  formatDate(date) {
-    return new Date(date).toString().slice(0, 15);
   }
 
   handleEditClick(e, post) {
