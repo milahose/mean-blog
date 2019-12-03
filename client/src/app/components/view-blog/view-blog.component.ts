@@ -66,7 +66,6 @@ export class ViewBlogComponent implements OnInit {
 
   updateLikes() {
     const userLiked = this.likes.filter(like => like.user === this.user._id);
-    console.log('userLiked', userLiked)
     if (!userLiked.length) {
       this.LikeService.addLike({ blog: this.blog._id })
         .subscribe(res => {

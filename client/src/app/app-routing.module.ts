@@ -22,6 +22,8 @@ const routes: Routes = [
   { path: 'blog/:title', component: ViewBlogComponent, canActivate: [AuthGuard] },
   { path: 'blog/:title/edit', component: EditBlogComponent, canActivate: [AuthGuard] },
   { path: 'profile/:username', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'profile/:username/likes', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'profile/:username/comments', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'logout', component: HomeComponent, canActivate: [AuthGuard] },
   { path: '**', component: HomeComponent }
 ];

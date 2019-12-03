@@ -19,6 +19,8 @@ router.post('/', (req, res) => {
 
 router.get('/username/:username', (req, res) => {
 	Like.find({ username: req.params.username })
+		.populate('user')
+		.populate('blog')
 		.sort({ date: -1 })
 		.then(result => {
 			if (!result) {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BlogService } from '../../services/blog/blog.service';
-import { AuthService } from '../../services/auth/auth.service';
+import { LikeService } from '../../services/like/like.service';
+import { CommentService } from '../../services/comment/comment.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -11,33 +12,61 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 export class ProfileComponent implements OnInit {
 
-  constructor(private BlogService: BlogService, private AuthService: AuthService, private router: Router, private route: ActivatedRoute) {}
+  constructor(
+    private BlogService: BlogService, 
+    private LikeService: LikeService, 
+    private CommentService: CommentService, 
+    private router: Router, 
+    private route: ActivatedRoute) {}
 
   loggedInUser = JSON.parse(localStorage.getItem('user'));
+  username = this.route.snapshot.paramMap.get('username');
+  heading;
   user;
   allowEdits;
   createdOn;
   posts;
+  likes;
   msg;
   msgClass;
 
   ngOnInit() { 
-    this.BlogService.getUserPosts(this.route.snapshot.paramMap.get('username'))
+    if (window.location.href.includes('likes')) {
+      this.heading = 'Likes';
+    } else if (window.location.href.includes('comments')) {
+      this.heading = 'Comments';
+    } else {
+      this.heading = 'Posts';
+    }
+
+    this.BlogService.getUserPosts(this.username)
       .subscribe(res => {
         if (res.result.user.username === this.loggedInUser.username) {
           this.allowEdits = true;
           this.createdOn = new Date(res.result.user.createdOn).toLocaleDateString();
         } else {
-          this.allowEdits = false;  
+          this.allowEdits = false;
         }
 
         this.user = res.result.user;
         this.posts = res.result.blogs;
+
+        console.log('posts', this.posts)
+      });
+
+    this.LikeService.getUserLikes(this.username)
+      .subscribe(res => {
+        let userLikes = res.result;
+        userLikes.forEach(like => {
+          this.LikeService.getBlogLikes(like.blog._id)
+            .subscribe(res => like.blog.totalLikes = res.result.length)
+        });
+        this.likes = userLikes;
       });
   }
 
-  parseHTML(post, i) {
-    let elm = document.querySelector(`.post-body-${i}`);
+  parseHTML(post, className, i) {
+    let elm = document.querySelector(`.${className}-${i}`);
     elm.innerHTML = `${post.body.slice(0, (post.body.length > 300 ? 300 : post.body.length - 4))}...`;
   }
 
