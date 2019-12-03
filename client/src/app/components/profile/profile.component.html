@@ -94,12 +94,37 @@
 								{{ss.parseHTML(like.blog, 'like-body', i)}}
 							</p>
 							<div class="mt-3 buttons float-right">
-								<button type="button" class="btn btn-primary btn-sm" (click)="updateLikes()">
+								<button type="button" class="btn btn-primary btn-sm" (click)="updateLikes(like)">
 									<span>👍</span>
 									<span class="num-likes">{{like.blog.totalLikes > 0 ? like.blog.totalLikes : ''}}</span>
 								</button>
 							</div>
 						</div>
+					</div>
+				</div>
+			</div>
+
+			<div *ngIf="heading === 'Comments'">
+				<div *ngFor="let comment of comments; let i = index;">
+					<div class="card mb-4" *ngIf="comment">
+						<!-- <div class="card-body">
+							<h2 class="card-title">
+								<a [routerLink]="['/blog', ss.normalizeRoute(like?.blog.title)]">{{like?.blog.title}}</a>
+							</h2>
+							<p>By <a [routerLink]="['/profile', like.blog.username]">{{like?.blog.name}}</a>
+								{{ss.formatDate(like?.blog.date)}}
+							</p>
+							<p class="card-text">
+								<span [ngClass]="['like-body-' + i]"></span>
+								{{ss.parseHTML(like.blog, 'like-body', i)}}
+							</p>
+							<div class="mt-3 buttons float-right">
+								<button type="button" class="btn btn-primary btn-sm" (click)="updateLikes()">
+									<span>👍</span>
+									<span class="num-likes">{{like.blog.totalLikes > 0 ? like.blog.totalLikes : ''}}</span>
+								</button>
+							</div>
+						</div> -->
 					</div>
 				</div>
 			</div>

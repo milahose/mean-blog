@@ -17,8 +17,8 @@ router.post('/', (req, res) => {
 		.then(null, err => res.json({ err: true, msg: err.message }))
 });
 
-router.get('/username/:username', (req, res) => {
-	Like.find({ username: req.params.username })
+router.get('/username/:user', (req, res) => {
+	Like.find({ user: req.params.user })
 		.populate('user')
 		.populate('blog')
 		.sort({ date: -1 })

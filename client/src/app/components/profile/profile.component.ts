@@ -53,17 +53,15 @@ export class ProfileComponent implements OnInit {
         this.user = res.result.user;
         this.posts = res.result.blogs;
 
-        console.log('posts', this.posts)
-      });
-
-    this.LikeService.getUserLikes(this.username)
-      .subscribe(res => {
-        let userLikes = res.result;
-        userLikes.forEach(like => {
-          this.LikeService.getBlogLikes(like.blog._id)
-            .subscribe(res => like.blog.totalLikes = res.result.length)
-        });
-        this.likes = userLikes;
+        this.LikeService.getUserLikes(this.user._id)
+          .subscribe(res => {
+            let userLikes = res.result;
+            userLikes.forEach(like => {
+              this.LikeService.getBlogLikes(like.blog._id)
+                .subscribe(res => like.blog.totalLikes = res.result.length)
+            });
+            this.likes = userLikes;
+          });
       });
   }
 
@@ -96,6 +94,15 @@ export class ProfileComponent implements OnInit {
           setTimeout(() => location.reload(), 500);
         }
       })
+  }
+
+  updateLikes(like) {
+    this.LikeService.deleteLike(like._id)
+      .subscribe(res => {
+        if (!res.err) {
+          this.likes = this.likes.filter(record => record._id !== like._id);
+        }
+      });
   }
 
 }
