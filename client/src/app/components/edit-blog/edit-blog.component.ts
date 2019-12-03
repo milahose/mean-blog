@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { BlogService } from '../../services/blog/blog.service';
+import { SharedService } from '../../services/shared/shared.service';
 import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
@@ -18,7 +19,12 @@ export class EditBlogComponent implements OnInit {
     body: ''
   };
 
-  constructor(private fb: FormBuilder, private BlogService: BlogService, private route: ActivatedRoute, private router: Router) {
+  constructor(
+    private fb: FormBuilder, 
+    private BlogService: BlogService, 
+    private ss: SharedService, 
+    private route: ActivatedRoute, 
+    private router: Router) {
     this.blog = window.history.state;
   }
 
@@ -35,12 +41,8 @@ export class EditBlogComponent implements OnInit {
     this.blog.title = this.blog.title;
     this.BlogService.editPost(this.blog)
       .subscribe(res => {
-        this.router.navigateByUrl(`/blog/${this.blog.title.toLowerCase().split(' ').join('-')}`);
+        this.router.navigateByUrl(`/blog/${this.ss.normalizeRoute(this.blog.title)}`);
       })
-  }
-
-  goBack() {
-    window.history.back();
   }
 
   titleForm = this.fb.group({

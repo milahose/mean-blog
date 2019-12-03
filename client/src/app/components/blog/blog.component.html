@@ -8,13 +8,13 @@
           <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
           <div class="card-body">
             <h2 class="card-title"><a
-                [routerLink]="['/blog', post.title.toLowerCase().split(' ').join('-')]">{{post?.title}}</a></h2>
+                [routerLink]="['/blog', ss.normalizeRoute(post.title)]">{{post?.title}}</a></h2>
             <p>By <a [routerLink]="['/profile', post.username]">{{post?.name}}</a>
-              {{SharedService.formatDate(post?.date)}}</p>
+              {{ss.formatDate(post?.date)}}</p>
             <p class="card-text">
               <span [ngClass]="['post-body-' + i]"></span>
-              {{SharedService.parseHTML(post, 'post-body', i)}}
-              <a [routerLink]="['/blog', post.title.toLowerCase().split(' ').join('-')]">Read More &#8811;</a>
+              {{ss.parseHTML(post, 'post-body', i)}}
+              <a [routerLink]="['/blog', ss.normalizeRoute(post.title)]">Read More &#8811;</a>
             </p>
             <div class="tags">
               <a href="" class="badge badge-pill badge-info m-1">JavaScript</a>

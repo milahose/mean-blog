@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { LikeService } from '../like/like.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +14,14 @@ export class SharedService {
 
   formatDate(date) {
     return new Date(date).toString().slice(0, 15);
+  }
+
+  goBack() {
+    window.history.back();
+  }
+
+  normalizeRoute(title) {
+    return title.toLowerCase().split(' ').join('-');
   }
 
 }

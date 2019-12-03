@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { BlogService } from '../../services/blog/blog.service';
+import { SharedService } from '../../services/shared/shared.service';
 import { Router } from "@angular/router";
 
 @Component({
@@ -14,7 +15,7 @@ export class NewBlogComponent implements OnInit {
 
   public Editor = ClassicEditor;
   user = JSON.parse(localStorage.getItem('user'));
-  constructor(private fb: FormBuilder, private router: Router, private BlogService: BlogService) { }
+  constructor(private fb: FormBuilder, private router: Router, private BlogService: BlogService, private ss: SharedService) { }
 
   msg;
   msgClass;
@@ -41,13 +42,9 @@ export class NewBlogComponent implements OnInit {
         } else {
           this.msgClass = 'alert alert-success show';
           this.msg = res.msg;
-          this.router.navigateByUrl(`/blog/${this.blog.title.toLowerCase().split(' ').join('-')}`);
+          this.router.navigateByUrl(`/blog/${this.ss.normalizeRoute(this.blog.title)}`);
         }
       })
-  }
-
-  goBack() {
-    window.history.back();
   }
 
   titleForm = this.fb.group({

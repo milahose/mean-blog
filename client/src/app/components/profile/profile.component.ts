@@ -19,7 +19,7 @@ export class ProfileComponent implements OnInit {
     private CommentService: CommentService, 
     private router: Router, 
     private route: ActivatedRoute,
-    private SharedService: SharedService) {}
+    private ss: SharedService) {}
 
   loggedInUser = JSON.parse(localStorage.getItem('user'));
   username = this.route.snapshot.paramMap.get('username');
@@ -69,7 +69,7 @@ export class ProfileComponent implements OnInit {
 
   handleEditClick(e, post) {
     e.preventDefault();
-    let blogTitle = post.title.toLowerCase().split(' ').join('-');
+    let blogTitle = this.ss.normalizeRoute(post.title);
     this.router.navigateByUrl(`/blog/${blogTitle}/edit`, { state: post });
   }
 
