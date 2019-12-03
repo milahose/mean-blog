@@ -46,6 +46,7 @@ export class ViewBlogComponent implements OnInit {
 
       this.LikeService.getBlogLikes(res.blog._id)
         .subscribe(res => {
+          console.log('RESULTS', res)
           this.likes = res.result;
           this.likeCount = res.result.length;
         });

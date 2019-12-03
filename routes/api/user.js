@@ -12,7 +12,7 @@ router.get('/@:username/posts', (req, res) => {
 		})
 		.then(blogs => {
 			result.blogs = blogs;
-			res.json({ err: false, msg: 'success', result })
+			res.json({ err: false, msg: 'Success', result })
 		})
 		.then(null, err => res.json({err: true, msg: err.message}))
 });

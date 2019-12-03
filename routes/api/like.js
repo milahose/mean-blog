@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const Like = require('../../models/Like');
+const User = require('../../models/User');
 
 router.post('/', (req, res) => {
 	Like.find({ blog: req.body.blog, user: req.decoded.userId })
@@ -17,19 +18,24 @@ router.post('/', (req, res) => {
 		.then(null, err => res.json({ err: true, msg: err.message }))
 });
 
-router.get('/username/:user', (req, res) => {
-	Like.find({ user: req.params.user })
-		.populate('user')
-		.populate('blog')
-		.sort({ date: -1 })
-		.then(result => {
-			if (!result) {
-				res.json({ err: true, msg: 'Unable to find user likes' })
-			} else {
-				res.json({ err: false, msg: 'Success', result })
+router.get('/username/:username', (req, res) => {
+	User.findOne({ username: req.params.username })
+		.then(res => {
+			if (!res.err) {
+				return Like.find({ user: res._id })
+					.populate('user')
+					.populate('blog')
+					.sort({ date: -1 })
 			}
 		})
-		.then(null, err => res.json({ err: true, msg: err.message }))
+		.then(result => {
+			if (!result) {
+				res.json({err: true, msg: 'Unable to find user likes'})
+			} else {
+				res.json({err: false, msg: 'Success', result})
+			}
+		})
+		.then(null, err => res.json({err: true, msg: err.message}))
 });
 
 router.get('/blog/:blogId', (req, res) => {

@@ -52,16 +52,17 @@ export class ProfileComponent implements OnInit {
 
         this.user = res.result.user;
         this.posts = res.result.blogs;
+      });
 
-        this.LikeService.getUserLikes(this.user._id)
-          .subscribe(res => {
-            let userLikes = res.result;
-            userLikes.forEach(like => {
-              this.LikeService.getBlogLikes(like.blog._id)
-                .subscribe(res => like.blog.totalLikes = res.result.length)
-            });
-            this.likes = userLikes;
-          });
+    this.LikeService.getUserLikes(this.username)
+      .subscribe(res => {
+        res.result.forEach(like => {
+          this.LikeService.getBlogLikes(like.blog._id)
+            .subscribe(res => {
+              like.blog.totalLikes = res.result.length;
+            })
+        })
+        this.likes = res.result;
       });
   }
 
