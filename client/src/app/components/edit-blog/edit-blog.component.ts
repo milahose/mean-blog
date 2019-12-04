@@ -30,7 +30,7 @@ export class EditBlogComponent implements OnInit {
 
   ngOnInit() {
     const post = this.route.snapshot.paramMap.get('title');
-    this.BlogService.getPost(post).subscribe(res => this.blog = res.blog);
+    this.BlogService.getPost(post).then(res => this.blog = res.blog)
   }
 
   onTitleChange(e) {
@@ -40,7 +40,7 @@ export class EditBlogComponent implements OnInit {
   submitBlogEdits() {
     this.blog.title = this.blog.title;
     this.BlogService.editPost(this.blog)
-      .subscribe(res => {
+      .then(res => {
         this.router.navigateByUrl(`/blog/${this.ss.normalizeRoute(this.blog.title)}`);
       })
   }

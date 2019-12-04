@@ -20,12 +20,12 @@ export class AuthService {
     'authorization': localStorage.getItem('token')
   }
 
-  register(user): Observable<any> {
-    return this.http.post<any>('api/auth/register', user);
+  register(user) {
+    return this.http.post<any>('api/auth/register', user).toPromise();
   }
 
-  login(user): Observable<any> {
-    return this.http.post<any>('api/auth/login', user);
+  login(user) {
+    return this.http.post<any>('api/auth/login', user).toPromise();
   }
 
   logout() {

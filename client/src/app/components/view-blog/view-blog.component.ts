@@ -35,14 +35,14 @@ export class ViewBlogComponent implements OnInit {
 
   ngOnInit() {
     const post = this.route.snapshot.paramMap.get('title');
-    this.BlogService.getPost(post).subscribe(res => {
+    this.BlogService.getPost(post).then(res => {
       let blogBody = document.getElementById('blog-body');
       this.blog = res.blog;
       this.blog.date = new Date(res.blog.date).toString().slice(0, 15);
       blogBody.innerHTML = this.blog.body;
 
       this.CommentService.getBlogComments(res.blog._id)
-        .subscribe(res => this.comments = res.result);
+        .then(res => this.comments = res.result);
 
       this.LikeService.getBlogLikes(res.blog._id)
         .then(res => {
@@ -74,6 +74,10 @@ export class ViewBlogComponent implements OnInit {
             this.likeCount++;
             this.likes.unshift(res.result)
           }
+        })
+        .then(null, err => {
+          this.msgClass = 'alert alert-danger alert-dismissible fade show';
+          this.msg = err;
         });
     } else {
       this.LikeService.deleteLike(userLiked[0]._id)
@@ -82,6 +86,10 @@ export class ViewBlogComponent implements OnInit {
             this.likeCount--;
             this.likes = this.likes.filter(like => like.user !== this.user._id);
           }
+        })
+        .then(null, err => {
+          this.msgClass = 'alert alert-danger alert-dismissible fade show';
+          this.msg = err;
         });
     }
   }
@@ -95,7 +103,7 @@ export class ViewBlogComponent implements OnInit {
       name: `${this.user.firstname} ${this.user.lastname}`,
       username: this.user.username
     })
-      .subscribe(res => {
+      .then(res => {
         if (res.err) {
           this.msgClass = 'alert alert-danger alert-dismissible fade show';
           this.msg = res.msg;
@@ -103,6 +111,10 @@ export class ViewBlogComponent implements OnInit {
           this.comments.unshift(res.result);
           this.commentForm.reset();
         }
+      })
+      .then(null, err => {
+        this.msgClass = 'alert alert-danger alert-dismissible fade show';
+        this.msg = err;
       });
   }
 
@@ -122,27 +134,36 @@ export class ViewBlogComponent implements OnInit {
       user: this.user._id,
       blog: this.blog._id,
       comment: updatedComment
-    }).subscribe(res => {
-      if (res.err) {
+    }).then(res => {
+        if (res.err) {
+          this.msgClass = 'alert alert-danger alert-dismissible fade show';
+          this.msg = res.msg;
+        }
+      })
+      .then(null, err => {
         this.msgClass = 'alert alert-danger alert-dismissible fade show';
-        this.msg = res.msg;
-      }
-    });
+        this.msg = err;
+      });
   }
 
   deleteComment(e, postComment) {
     e.preventDefault();
     this.stopEditing();
-    this.CommentService.deleteComment(postComment._id).subscribe(res => {
-      if (res.err) {
+    this.CommentService.deleteComment(postComment._id)
+      .then(res => {
+        if (res.err) {
+          this.msgClass = 'alert alert-danger alert-dismissible fade show';
+          this.msg = res.msg;
+        } else {
+          this.comments = this.comments.filter(comment => {
+            return comment._id !== postComment._id;
+          });
+        }
+      })
+      .then(null, err => {
         this.msgClass = 'alert alert-danger alert-dismissible fade show';
-        this.msg = res.msg;
-      } else {
-        this.comments = this.comments.filter(comment => {
-          return comment._id !== postComment._id;
-        });
-      }
-    });
+        this.msg = err;
+      });
   }
 
   editClicked(e, comment) {
@@ -159,7 +180,7 @@ export class ViewBlogComponent implements OnInit {
   deletePost(blog) {
     const deletedBlogId = blog._id;
     this.BlogService.deletePost(blog._id)
-      .subscribe(res => {
+      .then(res => {
         if (res.err) {
           this.msgClass = 'alert alert-danger show';
           this.msg = res.msg;
@@ -167,6 +188,10 @@ export class ViewBlogComponent implements OnInit {
           this.router.navigateByUrl(`/blog`); 
         }
       })
+      .then(null, err => {
+        this.msgClass = 'alert alert-danger alert-dismissible fade show';
+        this.msg = err;
+      });
   }
 
 }

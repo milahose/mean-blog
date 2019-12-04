@@ -22,7 +22,7 @@ export class LoginComponent {
       usernameOrEmail: this.loginForm.get('usernameOrEmail').value.toLowerCase(),
       password: this.loginForm.get('password').value
     })
-      .subscribe(res => {
+      .then(res => {
         if (res.err) {
           this.msgClass = 'alert alert-danger alert-dismissible fade show';
           this.msg = res.msg;
@@ -32,6 +32,10 @@ export class LoginComponent {
           this.msg = res.msg;
           setTimeout(() => this.router.navigate(['/blog']), 500);
         }
+      })
+      .then(null, err => {
+        this.msgClass = 'alert alert-danger alert-dismissible fade show';
+        this.msg = err;
       })
   }
 

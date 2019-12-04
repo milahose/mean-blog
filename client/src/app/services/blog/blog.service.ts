@@ -15,27 +15,27 @@ export class BlogService {
     'authorization': localStorage.getItem('token')
   }
   
-  getAllPosts(): Observable<any> {
-    return this.http.get<any>(`api/blog/`, { headers: this.headers });
+  getAllPosts() {
+    return this.http.get<any>(`api/blog/`, { headers: this.headers }).toPromise();
   }
 
-  getUserPosts(username): Observable<any> {
-    return this.http.get<any>(`api/user/@${username}/posts`, { headers: this.headers });
+  getUserPosts(username) {
+    return this.http.get<any>(`api/user/@${username}/posts`, { headers: this.headers }).toPromise();
   }
 
-  addPost(post): Observable<any> {
-    return this.http.post<any>(`api/blog`, post, { headers: this.headers });
+  addPost(post) {
+    return this.http.post<any>(`api/blog`, post, { headers: this.headers }).toPromise();
   }
 
-  getPost(title): Observable<any> {
-    return this.http.get<any>(`api/blog/${title}`, { headers: this.headers });
+  getPost(title) {
+    return this.http.get<any>(`api/blog/${title}`, { headers: this.headers }).toPromise();
   }
 
-  editPost(post): Observable<any> {
-    return this.http.post<any>(`api/blog/edit`, post, { headers: this.headers });
+  editPost(post) {
+    return this.http.post<any>(`api/blog/edit`, post, { headers: this.headers }).toPromise();
   }
 
-  deletePost(id): Observable<any> {
-    return this.http.delete<any>(`api/blog/delete/${id}`, { headers: this.headers });
+  deletePost(id) {
+    return this.http.delete<any>(`api/blog/delete/${id}`, { headers: this.headers }).toPromise();
   }
 }

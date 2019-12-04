@@ -25,16 +25,20 @@ export class RegisterComponent {
       email: this.registerForm.get('email').value.toLowerCase(),
       password: this.registerForm.get('password').value
     })
-    .subscribe(res => {
-      if (res.err) {
+      .then(res => {
+        if (res.err) {
+          this.msgClass = 'alert alert-danger alert-dismissible fade show';
+          this.msg = res.msg;
+        } else {
+          this.msgClass = 'alert alert-success alert-dismissible fade show';
+          this.msg = res.msg;
+          setTimeout(() => this.router.navigate(['/blog']), 2000);
+        }
+      })
+      .then(null, err => {
         this.msgClass = 'alert alert-danger alert-dismissible fade show';
-        this.msg = res.msg;
-      } else {
-        this.msgClass = 'alert alert-success alert-dismissible fade show';
-        this.msg = res.msg;
-        setTimeout(() => this.router.navigate(['/blog']), 2000);
-      }
-    })
+        this.msg = err;
+      })
   }
 
   registerForm = this.fb.group({

@@ -35,7 +35,7 @@ export class NewBlogComponent implements OnInit {
   submitBlog() {
     this.blog.title = this.blog.title;
     this.BlogService.addPost(this.blog)
-      .subscribe(res => {
+      .then(res => {
         if (res.err) {
           this.msgClass = 'alert alert-danger show';
           this.msg = res.msg;
@@ -44,6 +44,10 @@ export class NewBlogComponent implements OnInit {
           this.msg = res.msg;
           this.router.navigateByUrl(`/blog/${this.ss.normalizeRoute(this.blog.title)}`);
         }
+      })
+      .then(null, err => {
+        this.msgClass = 'alert alert-danger show';
+        this.msg = err;
       })
   }
 

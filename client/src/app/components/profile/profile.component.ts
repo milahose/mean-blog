@@ -43,7 +43,7 @@ export class ProfileComponent implements OnInit {
     }
 
     this.BlogService.getUserPosts(this.username)
-      .subscribe(res => {
+      .then(res => {
         if (res.result.user.username === this.loggedInUser.username) {
           this.allowEdits = true;
           this.createdOn = new Date(res.result.user.createdOn).toLocaleDateString();
@@ -53,6 +53,10 @@ export class ProfileComponent implements OnInit {
 
         this.user = res.result.user;
         this.posts = res.result.blogs;
+      })
+      .then(null, err => {
+        this.msgClass = 'alert alert-danger show';
+        this.msg = err.msg;
       });
 
     this.LikeService.getUserLikes(this.username)
@@ -98,7 +102,7 @@ export class ProfileComponent implements OnInit {
   deletePost(post) {
     const deletedPostId = post._id;
     this.BlogService.deletePost(post._id)
-      .subscribe(res => {
+      .then(res => {
         if (res.err) {
           this.msgClass = 'alert alert-danger show';
           this.msg = res.msg;
@@ -112,6 +116,10 @@ export class ProfileComponent implements OnInit {
           });
           setTimeout(() => location.reload(), 500);
         }
+      })
+      .then(null, err => {
+        this.msgClass = 'alert alert-danger show';
+        this.msg = err;
       })
   }
 
