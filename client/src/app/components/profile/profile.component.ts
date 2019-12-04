@@ -125,8 +125,9 @@ export class ProfileComponent implements OnInit {
         this.LikeService.deleteLike(userHasLiked[0]._id)
           .then(res => {
             if (!res.err) {
-              this.likes = this.likes.filter(record => record.blog._id !== post.blog._id);
-              // post.blog.likes = this.likes.filter(record => record._id !== userHasLiked[0]._id);
+              this.likes = this.likes.filter(record => 
+                record.blog._id !== post.blog._id  
+              );
             }
           });
       } else {
@@ -147,17 +148,6 @@ export class ProfileComponent implements OnInit {
     } else {
       console.log('need to add code to add a like')
     }
-    // console.log(userHasLiked)
-    // if (this.loggedInUser)
-    // console.log('likes', this.likes)
-    // console.log('like', like)
-    // console.log('user', this.user)
-    // this.LikeService.deleteLike(like._id)
-    //   .subscribe(res => {
-    //     if (!res.err) {
-    //       this.likes = this.likes.filter(record => record._id !== like._id);
-    //     }
-    //   });
   }
 
 }
