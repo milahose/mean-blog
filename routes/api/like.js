@@ -25,7 +25,6 @@ router.get('/username/:username', (req, res) => {
 				return Like.find({ user: res._id })
 					.populate('user')
 					.populate('blog')
-					.sort({ date: -1 })
 			}
 		})
 		.then(result => {

@@ -19,16 +19,16 @@ export class LikeService {
     return this.http.post<any>(`api/like/`, like, { headers: this.headers });
   }
 
-  getUserLikes(username): Observable<any> {
-    return this.http.get<any>(`api/like/username/${username}`, { headers: this.headers, params: username });
+  getUserLikes(username) {
+    return this.http.get<any>(`api/like/username/${username}`, { headers: this.headers, params: username }).toPromise();
   }
 
-  getBlogLikes(blog): Observable<any> {
-    return this.http.get<any>(`api/like/blog/${blog}`, { headers: this.headers, params: blog });
+  getBlogLikes(blog) {
+    return this.http.get<any>(`api/like/blog/${blog}`, { headers: this.headers, params: blog }).toPromise();
   }
 
-  deleteLike(id): Observable<any> {
-    return this.http.delete<any>(`api/like/${id}`, { headers: this.headers });
+  deleteLike(id) {
+    return this.http.delete<any>(`api/like/${id}`, { headers: this.headers }).toPromise();
   }
 
 }

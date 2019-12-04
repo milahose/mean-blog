@@ -4,6 +4,7 @@ import { LikeService } from '../../services/like/like.service';
 import { CommentService } from '../../services/comment/comment.service';
 import { SharedService } from '../../services/shared/shared.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-profile',
@@ -55,14 +56,31 @@ export class ProfileComponent implements OnInit {
       });
 
     this.LikeService.getUserLikes(this.username)
-      .subscribe(res => {
-        res.result.forEach(like => {
-          this.LikeService.getBlogLikes(like.blog._id)
-            .subscribe(res => {
-              like.blog.totalLikes = res.result.length;
-            })
-        })
-        this.likes = res.result;
+      .then(res => {
+        this.likes = res.result.reverse().map(record => {
+          return {
+            blog: {
+              ...record.blog
+            },
+            user: {
+              ...record.user,
+            }
+          }
+        });
+
+        return this.likes.reduce(async (promise, record) => {
+          await promise;
+          return this.LikeService.getBlogLikes(record.blog._id)
+            .then(res => {
+              record.blog.likes = res.result;
+              record.blog.totalLikes = res.result.length;
+              return res;
+            });
+        }, Promise.resolve());
+      })
+      .then(null, err => {
+        this.msgClass = 'alert alert-danger show';
+        this.msg = err.msg;
       });
   }
 
@@ -97,13 +115,49 @@ export class ProfileComponent implements OnInit {
       })
   }
 
-  updateLikes(like) {
-    this.LikeService.deleteLike(like._id)
-      .subscribe(res => {
-        if (!res.err) {
-          this.likes = this.likes.filter(record => record._id !== like._id);
-        }
-      });
+  updateLikes(post) {
+    const userHasLiked = post.blog.likes.filter(record => 
+      record.user === this.loggedInUser._id
+    );
+
+    if (userHasLiked.length) {
+      if (this.user._id === this.loggedInUser._id) {
+        this.LikeService.deleteLike(userHasLiked[0]._id)
+          .then(res => {
+            if (!res.err) {
+              this.likes = this.likes.filter(record => record.blog._id !== post.blog._id);
+              // post.blog.likes = this.likes.filter(record => record._id !== userHasLiked[0]._id);
+            }
+          });
+      } else {
+        this.LikeService.deleteLike(userHasLiked[0]._id)
+          .then(res => {
+            if (!res.err) {
+              post.blog.totalLikes--;
+              this.likes.forEach(record => {
+                if (record.blog._id === post.blog._id) {
+                  record.blog.likes = record.blog.likes.filter(like => 
+                    like._id !== userHasLiked[0]._id
+                  );
+                }
+              })
+            }
+          });
+      }
+    } else {
+      console.log('need to add code to add a like')
+    }
+    // console.log(userHasLiked)
+    // if (this.loggedInUser)
+    // console.log('likes', this.likes)
+    // console.log('like', like)
+    // console.log('user', this.user)
+    // this.LikeService.deleteLike(like._id)
+    //   .subscribe(res => {
+    //     if (!res.err) {
+    //       this.likes = this.likes.filter(record => record._id !== like._id);
+    //     }
+    //   });
   }
 
 }

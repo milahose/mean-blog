@@ -45,7 +45,7 @@ export class ViewBlogComponent implements OnInit {
         .subscribe(res => this.comments = res.result);
 
       this.LikeService.getBlogLikes(res.blog._id)
-        .subscribe(res => {
+        .then(res => {
           console.log('RESULTS', res)
           this.likes = res.result;
           this.likeCount = res.result.length;
@@ -77,7 +77,7 @@ export class ViewBlogComponent implements OnInit {
         });
     } else {
       this.LikeService.deleteLike(userLiked[0]._id)
-        .subscribe(res => {
+        .then(res => {
           if (!res.err) {
             this.likeCount--;
             this.likes = this.likes.filter(like => like.user !== this.user._id);
