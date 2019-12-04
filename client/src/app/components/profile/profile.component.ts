@@ -129,6 +129,10 @@ export class ProfileComponent implements OnInit {
                 record.blog._id !== post.blog._id  
               );
             }
+          })
+          .then(null, err => {
+            this.msgClass = 'alert alert-danger show';
+            this.msg = err.msg;
           });
       } else {
         this.LikeService.deleteLike(userHasLiked[0]._id)
@@ -143,10 +147,29 @@ export class ProfileComponent implements OnInit {
                 }
               })
             }
+          })
+          .then(null, err => {
+            this.msgClass = 'alert alert-danger show';
+            this.msg = err.msg;
           });
       }
     } else {
-      console.log('need to add code to add a like')
+      this.LikeService.addLike({
+        blog: post.blog._id,
+        user: this.loggedInUser._id
+      })
+        .then(res => {
+          post.blog.totalLikes++;
+          this.likes.forEach(record => {
+            if (record.blog._id === post.blog._id) {
+              record.blog.likes.push(res.result);
+            }
+          })
+        })
+        .then(null, err => {
+          this.msgClass = 'alert alert-danger show';
+          this.msg = err.msg;
+        });
     }
   }
 

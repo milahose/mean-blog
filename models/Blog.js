@@ -18,10 +18,6 @@ const blogSchema = new Schema({
 		type: String,
 		required: true,
 	},
-	totalLikes: {
-		type: Schema.Types.ObjectId,
-		ref: 'Like'
-	},
 	date: {
 		type: Date, 
 		default: Date.now

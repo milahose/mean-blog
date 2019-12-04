@@ -69,7 +69,7 @@ export class ViewBlogComponent implements OnInit {
     const userLiked = this.likes.filter(like => like.user === this.user._id);
     if (!userLiked.length) {
       this.LikeService.addLike({ blog: this.blog._id })
-        .subscribe(res => {
+        .then(res => {
           if (!res.err) {
             this.likeCount++;
             this.likes.unshift(res.result)
