@@ -54,7 +54,7 @@ router.post('/edit', (req, res) => {
 	if (req.body.originalTitle.toLowerCase() !== req.body.title.toLowerCase()) {
 		Blog.find({ title: req.body.originalTitle, user: req.decoded.userId })
 			.then(result => {
-				if (result.length) {
+				if (result.length && req.body.originalTitle.toLowerCase() !== result[0].title.toLowerCase()) {
 					res.json({
 						err: true,
 						msg: `Please choose a unique blog title (you already have a blog named "${req.body.title}").`

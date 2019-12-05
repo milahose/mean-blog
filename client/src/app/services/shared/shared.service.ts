@@ -54,7 +54,7 @@ export class SharedService {
   }
 
   generateImg() {
-    return this.images[Math.floor((Math.random() * 9))];
+    return this.images[Math.floor((Math.random() * 8))];
   }
 
 }

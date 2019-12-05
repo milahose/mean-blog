@@ -36,6 +36,7 @@ export class NewBlogComponent implements OnInit {
 
   submitBlog() {
     this.blog.title = this.blog.title.trim();
+    console.log('this.ss.generateImg()', this.ss.generateImg())
     let img = this.ss.generateImg();
     this.blog.img = img.img;
     this.blog.imgAlt = img.alt;
@@ -45,6 +46,7 @@ export class NewBlogComponent implements OnInit {
           this.msgClass = 'alert alert-danger show';
           this.msg = res.msg;
         } else {
+          console.log('this.blog.title', this.blog.title)
           this.msgClass = 'alert alert-success show';
           this.msg = res.msg;
           this.router.navigateByUrl(`/blog/${this.ss.normalizeRoute(this.blog.title)}`);
