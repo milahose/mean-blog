@@ -3,6 +3,11 @@ const Like = require('../../models/Like');
 const User = require('../../models/User');
 
 router.post('/', (req, res) => {
+	/*
+		first check if a like exists for user/blog,
+		so multiple "like" documents are not inserted
+		for the same person on the same blog.
+	*/
 	Like.find({ blog: req.body.blog, user: req.decoded.userId })
 		.then(blog => {
 			if (blog.length) {
@@ -28,12 +33,12 @@ router.get('/username/:username', (req, res) => {
 		})
 		.then(result => {
 			if (!result) {
-				res.json({err: true, msg: 'Unable to find user likes'})
+				res.json({ err: true, msg: 'Unable to find user likes' })
 			} else {
-				res.json({err: false, msg: 'Success', result})
+				res.json({ err: false, msg: 'Success', result })
 			}
 		})
-		.then(null, err => res.json({err: true, msg: err.message}))
+		.then(null, err => res.json({ err: true, msg: err.message }))
 });
 
 router.get('/blog/:blogId', (req, res) => {

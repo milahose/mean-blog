@@ -10,6 +10,7 @@ const comment = require('./comment');
 
 router.use('/auth', auth);
 
+// Middleware to check for JWT token
 router.use((req, res, next) => {
 	const token = (
 		req.headers.authorization && req.headers.authorization.split(' ')[1]

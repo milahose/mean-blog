@@ -54,6 +54,8 @@ router.post('/edit', (req, res) => {
 	if (req.body.originalTitle.toLowerCase() !== req.body.title.toLowerCase()) {
 		Blog.find({ title: req.body.originalTitle, user: req.decoded.userId })
 			.then(result => {
+				// Make sure user is not trying to rename the blog with a
+				// title that already exists on one of their other blogs.
 				if (result.length && req.body.originalTitle.toLowerCase() !== result[0].title.toLowerCase()) {
 					res.json({
 						err: true,

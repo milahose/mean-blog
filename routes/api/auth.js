@@ -62,6 +62,7 @@ router.post('/login', (req, res) => {
 		.then(result => {
 			if (!result) throw new Error('Incorrect username, password or email.');
 			const token = `JWT ${jwt.sign({ userId: dbUser._id }, process.env.SECRET, { expiresIn: '8h' })}`;
+			// Delete before sending back to the client so hashed password is not visible in local storage
 			delete dbUser.password;
 			delete dbUser.__v;
 			return res.json({ err: false, msg: 'Log in successful', user: dbUser, token });

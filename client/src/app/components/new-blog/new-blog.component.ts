@@ -36,6 +36,7 @@ export class NewBlogComponent implements OnInit {
 
   submitBlog() {
     this.blog.title = this.blog.title.trim().split('').map(word => {
+      // Strip special characters out of title to normalize URL
       return word.split('').map(char => {
         if (char !== ':') {
           if (char == '-') {
@@ -46,6 +47,7 @@ export class NewBlogComponent implements OnInit {
         }
       })
     }).join('')
+    // Generate a random image for the blog
     let img = this.ss.generateImg();
     this.blog.img = img.img;
     this.blog.imgAlt = img.alt;

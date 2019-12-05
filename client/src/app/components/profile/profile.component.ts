@@ -76,6 +76,7 @@ export class ProfileComponent implements OnInit {
           }
         });
 
+        // Get all of the blog likes for each blog the user liked
         return this.likes.reduce(async (promise, record) => {
           await promise;
           return this.LikeService.getBlogLikes(record.blog._id)
@@ -161,6 +162,12 @@ export class ProfileComponent implements OnInit {
     );
 
     if (userHasLiked.length) {
+      /* The delete actions below are the same, but we either
+       * want to remove the liked post from the user's profile,
+       * if the profile is the loggedIn user's profile, or we 
+       * simply want to decrement the blog likes if it is not 
+       * the loggedIn user's profile.
+       */
       if (this.user._id === this.loggedInUser._id) {
         this.LikeService.deleteLike(userHasLiked[0]._id)
           .then(res => {

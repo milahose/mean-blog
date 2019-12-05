@@ -177,7 +177,6 @@ export class ViewBlogComponent implements OnInit {
   }
 
   deletePost(blog) {
-    const deletedBlogId = blog._id;
     this.BlogService.deletePost(blog._id)
       .then(res => {
         if (res.err) {
