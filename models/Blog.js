@@ -22,6 +22,14 @@ const blogSchema = new Schema({
 		type: Date, 
 		default: Date.now
 	},
+	img: {
+		type: String,
+		required: true,
+	},
+	imgAlt: {
+		type: String,
+		required: true,
+	}
 });
 
 module.exports = mongoose.model('Blog', blogSchema);

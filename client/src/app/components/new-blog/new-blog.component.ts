@@ -23,7 +23,9 @@ export class NewBlogComponent implements OnInit {
     title: '',
     body: '',
     username: this.user.username,
-    name: `${this.user.firstname} ${this.user.lastname}`
+    name: `${this.user.firstname} ${this.user.lastname}`,
+    img: '',
+    imgAlt: ''
   };
 
   ngOnInit() {}
@@ -34,6 +36,9 @@ export class NewBlogComponent implements OnInit {
 
   submitBlog() {
     this.blog.title = this.blog.title;
+    let img = this.ss.generateImg();
+    this.blog.img = img.img;
+    this.blog.imgAlt = img.alt;
     this.BlogService.addPost(this.blog)
       .then(res => {
         if (res.err) {
