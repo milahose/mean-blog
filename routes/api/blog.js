@@ -4,10 +4,20 @@ const Like = require('../../models/Like');
 const Comment = require('../../models/Comment');
 
 router.post('/', (req, res) => {
-	Blog.create({
-		...req.body,
-		user: req.decoded.userId
-	})
+	Blog.find({ title: req.body.title, user: req.decoded.userId })
+		.then(result => {
+			if (result.length) {
+				res.json({ 
+					err: true, 
+					msg: `Please choose a unique blog title (you already have a blog named "${req.body.title}").` 
+				})
+			} else {
+				return Blog.create({
+					...req.body,
+					user: req.decoded.userId
+				})
+			}
+		})
 		.then(result => res.json(result))
 		.then(null, err => res.json({ err: true, msg: err.message }))
 });
@@ -41,9 +51,25 @@ router.get('/@username/posts', (req, res) => {
 });
 
 router.post('/edit', (req, res) => {
-	Blog.findOneAndUpdate({ _id: req.body._id }, req.body, { new: true })
-		.then(blog => res.json({ err: false, blog }))
-		.then(null, err => res.json({ err: true, msg: err.message }))
+	if (req.body.originalTitle.toLowerCase() !== req.body.title.toLowerCase()) {
+		Blog.find({ title: req.body.originalTitle, user: req.decoded.userId })
+			.then(result => {
+				if (result.length) {
+					res.json({
+						err: true,
+						msg: `Please choose a unique blog title (you already have a blog named "${req.body.title}").`
+					})
+				} else {
+					Blog.findOneAndUpdate({ _id: req.body._id }, req.body, { new: true })
+						.then(blog => res.json({ err: false, blog }))
+						.then(null, err => res.json({ err: true, msg: err.message }))
+				}
+			})
+	} else {
+		Blog.findOneAndUpdate({ _id: req.body._id }, req.body, { new: true })
+			.then(blog => res.json({ err: false, blog }))
+			.then(null, err => res.json({ err: true, msg: err.message }))
+	}
 })
 
 router.delete('/delete/:id', (req, res) => {

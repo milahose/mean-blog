@@ -13,10 +13,13 @@ import { ActivatedRoute, Router } from "@angular/router";
 
 export class EditBlogComponent implements OnInit {
 
+  msg;
+  msgClass;
   public Editor = ClassicEditor;
   public blog = {
     title: '',
-    body: ''
+    body: '',
+    originalTitle: ''
   };
 
   constructor(
@@ -30,7 +33,10 @@ export class EditBlogComponent implements OnInit {
 
   ngOnInit() {
     const post = this.route.snapshot.paramMap.get('title');
-    this.BlogService.getPost(post).then(res => this.blog = res.blog)
+    this.BlogService.getPost(post).then(res => {
+      this.blog = res.blog;
+      this.blog.originalTitle = res.blog.title;
+    })
   }
 
   onTitleChange(e) {
@@ -41,7 +47,14 @@ export class EditBlogComponent implements OnInit {
     this.blog.title = this.blog.title;
     this.BlogService.editPost(this.blog)
       .then(res => {
-        this.router.navigateByUrl(`/blog/${this.ss.normalizeRoute(this.blog.title)}`);
+        if (res.err) {
+          this.msgClass = 'alert alert-danger show';
+          this.msg = res.msg;
+        } else {
+          this.msgClass = 'alert alert-success show';
+          this.msg = res.msg;
+          this.router.navigateByUrl(`/blog/${this.ss.normalizeRoute(this.blog.title)}`);
+        }
       })
   }
 

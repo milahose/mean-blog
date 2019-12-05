@@ -35,7 +35,7 @@ export class NewBlogComponent implements OnInit {
   }
 
   submitBlog() {
-    this.blog.title = this.blog.title;
+    this.blog.title = this.blog.title.trim();
     let img = this.ss.generateImg();
     this.blog.img = img.img;
     this.blog.imgAlt = img.alt;
