@@ -11,11 +11,11 @@ router.post('/', (req, res) => {
 				return Like.create({
 					...req.body,
 					user: req.decoded.userId
-				});
+				})
+				.then(result => res.json({ err: false, msg: 'Success', result }))
+				.then(null, err => res.json({ err: true, msg: err.message }))
 			}
 		})
-		.then(result => res.json({ err: false, msg: 'Success', result }))
-		.then(null, err => res.json({ err: true, msg: err.message }))
 });
 
 router.get('/username/:username', (req, res) => {
