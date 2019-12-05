@@ -147,7 +147,6 @@ export class ProfileComponent implements OnInit {
               return post;
             }
           });
-          setTimeout(() => location.reload(), 500);
         }
       })
       .then(null, err => {
