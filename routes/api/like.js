@@ -23,7 +23,6 @@ router.get('/username/:username', (req, res) => {
 		.then(res => {
 			if (!res.err) {
 				return Like.find({ user: res._id })
-					// .populate('user')
 					.populate('blog')
 			}
 		})
