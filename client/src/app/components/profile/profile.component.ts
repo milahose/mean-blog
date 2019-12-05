@@ -4,7 +4,7 @@ import { LikeService } from '../../services/like/like.service';
 import { CommentService } from '../../services/comment/comment.service';
 import { SharedService } from '../../services/shared/shared.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { mergeMap } from 'rxjs/operators';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-profile',
@@ -20,7 +20,8 @@ export class ProfileComponent implements OnInit {
     private CommentService: CommentService, 
     private router: Router, 
     private route: ActivatedRoute,
-    private ss: SharedService) {}
+    private ss: SharedService,
+    private fb: FormBuilder) {}
 
   loggedInUser = JSON.parse(localStorage.getItem('user'));
   username = this.route.snapshot.paramMap.get('username');
@@ -30,8 +31,11 @@ export class ProfileComponent implements OnInit {
   createdOn;
   posts;
   likes;
+  comments;
   msg;
   msgClass;
+  editing = false;
+  editingId;
 
   ngOnInit() { 
     if (window.location.href.includes('likes')) {
@@ -85,6 +89,35 @@ export class ProfileComponent implements OnInit {
       .then(null, err => {
         this.msgClass = 'alert alert-danger show';
         this.msg = err.msg;
+      });
+
+    this.CommentService.getUserComments(this.username)
+      .then(res => {
+        this.comments = res.result.reverse().map(record => {
+          return {
+            comment: {
+              _id: record._id,
+              comment: record.comment,
+              name: record.name,
+              username: record.username,
+              date: record.date
+            },
+            blog: record.blog
+          }
+        });
+
+        return this.comments.reduce(async (promise, record) => {
+          await promise;
+          return this.BlogService.getPostById(record.blog)
+            .then(res => {
+              record.blog = res.blog;
+              return res;
+            });
+        }, Promise.resolve());
+      })
+      .then(null, err => {
+        this.msgClass = 'alert alert-danger show';
+        this.msg = err;
       });
   }
 
@@ -179,6 +212,69 @@ export class ProfileComponent implements OnInit {
           this.msg = err.msg;
         });
     }
+  }
+  
+  editCommentForm = this.fb.group({
+    comment: ['', Validators.required]
+  });
+
+  editComment(postComment) {
+    this.stopEditing();
+    const updatedComment = this.editCommentForm.get('comment').value;
+    this.comments = this.comments.map(record => {
+      if (record.comment._id === postComment.comment._id) {
+        record.comment.comment = updatedComment;
+        return record;
+      }
+      return record;
+    });
+
+    this.CommentService.updateComment({
+      _id: postComment.comment._id,
+      user: this.user._id,
+      blog: postComment.blog._id,
+      comment: updatedComment
+    }).then(res => {
+      if (res.err) {
+        this.msgClass = 'alert alert-danger alert-dismissible fade show';
+        this.msg = res.msg;
+      }
+    })
+      .then(null, err => {
+        this.msgClass = 'alert alert-danger alert-dismissible fade show';
+        this.msg = err;
+      });
+  }
+
+  deleteComment(e, postComment) {
+    e.preventDefault();
+    this.stopEditing();
+    this.CommentService.deleteComment(postComment._id)
+      .then(res => {
+        if (res.err) {
+          this.msgClass = 'alert alert-danger alert-dismissible fade show';
+          this.msg = res.msg;
+        } else {
+          this.comments = this.comments.filter(record => {
+            return record.comment._id !== postComment._id;
+          });
+        }
+      })
+      .then(null, err => {
+        this.msgClass = 'alert alert-danger alert-dismissible fade show';
+        this.msg = err;
+      });
+  }
+
+  editClicked(e, record) {
+    e.preventDefault();
+    this.editing = true;
+    this.editingId = record.comment._id;
+  }
+
+  stopEditing() {
+    this.editing = false;
+    this.editingId = null;
   }
 
 }

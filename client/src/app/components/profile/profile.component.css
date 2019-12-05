@@ -19,3 +19,7 @@ button {
 .modal-footer {
 	border: none !important;
 }
+
+textarea {
+	resize: none;
+}

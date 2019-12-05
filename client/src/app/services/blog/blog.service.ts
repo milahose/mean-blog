@@ -31,6 +31,10 @@ export class BlogService {
     return this.http.get<any>(`api/blog/${title}`, { headers: this.headers }).toPromise();
   }
 
+  getPostById(id) {
+    return this.http.get<any>(`api/blog/id/${id}`, { headers: this.headers }).toPromise();
+  }
+
   editPost(post) {
     return this.http.post<any>(`api/blog/edit`, post, { headers: this.headers }).toPromise();
   }

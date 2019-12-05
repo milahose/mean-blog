@@ -25,6 +25,12 @@ router.get('/:title', (req, res) => {
 		.then(null, err => res.json({ err: true, msg: err.message }))
 });
 
+router.get('/id/:id', (req, res) => {
+	Blog.findOne({ _id: req.params.id })
+		.then(blog => res.json({ err: false, blog }))
+		.then(null, err => res.json({ err: true, msg: err.message }))
+});
+
 router.get('/@username/posts', (req, res) => {
 	Blog.find({ username: req.params.username })
 		.sort({ date: -1 })
