@@ -1,1 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
+.navbar a {
+	color: #fff !important;
+}
+
+a.dropdown-item {
+	color: #343a40 !important;
+}
+
+a {
+	color: #33658A;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+.card {
+	box-shadow: 0 10px 6px -6px lightgray;
+}

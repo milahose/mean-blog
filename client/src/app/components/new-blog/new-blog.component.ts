@@ -39,7 +39,7 @@ export class NewBlogComponent implements OnInit {
       return word.split('').map(char => {
         if (char !== ':') {
           if (char == '-') {
-            return 'to'
+            return ' to '
           } else {
             return char;
           }
