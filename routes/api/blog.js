@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const Blog = require('../../models/Blog');
+const Like = require('../../models/Like');
+const Comment = require('../../models/Comment');
 
 router.post('/', (req, res) => {
 	Blog.create({
@@ -45,7 +47,9 @@ router.post('/edit', (req, res) => {
 })
 
 router.delete('/delete/:id', (req, res) => {
-	Blog.deleteOne({ _id: req.params.id })
+	Blog.deleteOne({ _id: req.params.id }) 
+		.then(() => Comment.deleteOne({ blog: req.params.id}))
+		.then(() => Like.deleteOne({ blog: req.params.id})) // delete likes and comments associate with blog
 		.then(() => res.json({ err: false, msg: 'Post deleted successfully.' }))
 		.then(null, err => res.json({ err: true, msg: err.message }))
 })
