@@ -143,10 +143,8 @@ export class ProfileComponent implements OnInit {
         } else {
           this.msgClass = 'alert alert-success show';
           this.msg = res.msg;
-          this.posts = this.posts.map(post => {
-            if (post._id !== deletedPostId) {
-              return post;
-            }
+          this.posts = this.posts.filter(blog => {
+            return blog._id !== deletedPostId
           });
         }
       })

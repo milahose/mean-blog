@@ -17,7 +17,6 @@ mongoose
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(routs);
-
-app.get('/', (req, res) => res.send('hello world'));
+app.use(express.static(__dirname + '/dist/'));
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
