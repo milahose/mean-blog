@@ -1,6 +1,6 @@
 # Welcome to the MEAN Stack Blog
 
-A Simple, no-frills MEAN Stack blogging app, created with MongoDB, Express.js, Angular 8 and Node.js.
+A simple, no-frills MEAN Stack blogging app, created with MongoDB, Express.js, Angular 8 and Node.js.
 
 ## Getting Started
 
