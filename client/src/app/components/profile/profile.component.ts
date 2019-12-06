@@ -20,7 +20,7 @@ export class ProfileComponent implements OnInit {
     private CommentService: CommentService, 
     private router: Router, 
     private route: ActivatedRoute,
-    private ss: SharedService,
+    public ss: SharedService,
     private fb: FormBuilder) {}
 
   loggedInUser = JSON.parse(localStorage.getItem('user'));

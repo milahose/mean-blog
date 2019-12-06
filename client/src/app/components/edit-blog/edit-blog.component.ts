@@ -25,7 +25,7 @@ export class EditBlogComponent implements OnInit {
   constructor(
     private fb: FormBuilder, 
     private BlogService: BlogService, 
-    private ss: SharedService, 
+    public ss: SharedService, 
     private route: ActivatedRoute, 
     private router: Router) {
     this.blog = window.history.state;

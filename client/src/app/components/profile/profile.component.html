@@ -6,13 +6,13 @@
 
 			<ul class="nav nav-tabs">
 				<li class="nav-item">
-					<a class="nav-link" [routerLink]="['/profile/' + username]" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (change)="showPosts()">Posts</a>
+					<a class="nav-link" [routerLink]="['/profile/' + username]" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Posts</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" [routerLink]="['/profile/' + username + '/likes']" routerLinkActive="active" (change)="showLikes()">Likes</a>
+					<a class="nav-link" [routerLink]="['/profile/' + username + '/likes']" routerLinkActive="active">Likes</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" [routerLink]="['/profile/' + username + '/comments']" routerLinkActive="active" (change)="showComments()">Comments</a>
+					<a class="nav-link" [routerLink]="['/profile/' + username + '/comments']" routerLinkActive="active">Comments</a>
 				</li>
 			</ul>
 			

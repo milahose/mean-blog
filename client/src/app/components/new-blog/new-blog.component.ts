@@ -15,7 +15,7 @@ export class NewBlogComponent implements OnInit {
 
   public Editor = ClassicEditor;
   user = JSON.parse(localStorage.getItem('user'));
-  constructor(private fb: FormBuilder, private router: Router, private BlogService: BlogService, private ss: SharedService) { }
+  constructor(private fb: FormBuilder, private router: Router, private BlogService: BlogService, public ss: SharedService) { }
 
   msg;
   msgClass;

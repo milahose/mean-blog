@@ -11,7 +11,7 @@ export class BlogComponent implements OnInit {
 
   posts;
 
-  constructor(private BlogService: BlogService, private ss: SharedService) { }
+  constructor(private BlogService: BlogService, public ss: SharedService) { }
 
   ngOnInit() {
     this.BlogService.getAllPosts()
